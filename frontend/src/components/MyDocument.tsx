@@ -1,0 +1,162 @@
+import {
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+  Font,
+} from '@react-pdf/renderer';
+
+import NotoSansSCLight from '/fonts/Noto_Sans_SC/static/NotoSansSC-Light.ttf';
+import NotoSansSCRegular from '/fonts/Noto_Sans_SC/static/NotoSansSC-Regular.ttf';
+import NotoSansSCSemiBold from '/fonts/Noto_Sans_SC/static/NotoSansSC-SemiBold.ttf';
+import InterRegular from '/fonts/Inter/static/Inter-Regular.ttf';
+
+Font.register({
+  family: 'Noto Sans SC Light',
+  src: NotoSansSCLight,
+});
+Font.register({
+  family: 'Noto Sans SC Regular',
+  src: NotoSansSCRegular,
+});
+Font.register({
+  family: 'Noto Sans SC SemiBold',
+  src: NotoSansSCSemiBold,
+});
+Font.register({
+  family: 'Inter Regular',
+  src: InterRegular,
+});
+
+const styles = StyleSheet.create({
+  page: {
+    padding: 30,
+  },
+  section: {
+    margin: 10,
+    padding: 10,
+    display: 'flex',
+  },
+  title: {
+    fontSize: 20,
+    fontFamily: 'Noto Sans SC SemiBold',
+    marginBottom: 20,
+  },
+  textContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    // paddingLeft: 3,
+    // paddingRight: 3,
+  },
+  text: {
+    fontSize: 14,
+    fontFamily: 'Noto Sans SC Regular',
+    marginBottom: 2,
+  },
+  annotation: {
+    fontSize: 7,
+    fontFamily: 'Inter Regular',
+    lineHeight: 1,
+    textAlign: 'center',
+    position: 'absolute',
+    top: -5,
+    width: '100%',
+  },
+  rubyText: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    // marginBottom: 4,
+    position: 'relative',
+    textAlign: 'center',
+    paddingLeft: 2,
+    paddingRight: 2,
+  },
+  space: {
+    padding: 6,
+  },
+  newline: {
+    width: '100%',
+    height: 12,
+  },
+  paragraph: {
+    width: '100%',
+    height: 24,
+  },
+  squareBrackets: {
+    fontSize: 12,
+    fontFamily: 'Inter Regular',
+    marginBottom: 1,
+    fontWeight: 'bold',
+  },
+  roundBrackets: {
+    fontSize: 12,
+    fontFamily: 'Inter Regular',
+    marginBottom: 1,
+    fontWeight: 'bold',
+  },
+});
+const roundBracketsRegex = /\([^)]*\)/g;
+const squareBracketsRegex = /\[[^\]]*\]/g;
+
+const RubyText = ({
+  mainText,
+  annotation,
+}: {
+  mainText: string;
+  annotation: string;
+}) => {
+  if (mainText === '#') {
+    return <Text style={styles.space}></Text>;
+  } else if (mainText === '%') {
+    return <View style={styles.newline}></View>;
+  } else if (mainText === '§') {
+    return <View style={styles.paragraph}></View>;
+  } else if (mainText.match(squareBracketsRegex)) {
+    return (
+      <View style={styles.rubyText}>
+        <Text style={styles.squareBrackets}>{mainText}</Text>
+      </View>
+    );
+  } else if (mainText.match(roundBracketsRegex)) {
+    return (
+      <View style={styles.rubyText}>
+        <Text style={styles.roundBrackets}>{mainText}</Text>
+      </View>
+    );
+  } else {
+    return (
+      <View style={styles.rubyText}>
+        <Text style={styles.annotation}>{annotation}</Text>
+        <Text style={styles.text}>{mainText}</Text>
+      </View>
+    );
+  }
+};
+
+const MyDocument = ({
+  content,
+}: {
+  content: { title: string; text: { hanzi: string; pinyin: string }[] };
+}) => (
+  <Document>
+    <Page size='A4' style={styles.page}>
+      <View style={styles.section}>
+        <Text style={styles.title}>{content.title}</Text>
+        <View style={styles.textContainer}>
+          {content.text.map((item, index) => (
+            <RubyText
+              key={index}
+              mainText={item.hanzi}
+              annotation={item.pinyin}
+            />
+          ))}
+        </View>
+      </View>
+    </Page>
+  </Document>
+);
+
+export default MyDocument;
