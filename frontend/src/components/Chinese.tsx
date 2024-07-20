@@ -14,6 +14,10 @@ function Chinese({ setLanguage }: LanguageSelectorProps) {
   const [annotations, setAnnotations] = useState<
     { hanzi: string; pinyin: string }[] | null
   >(null);
+  // const [annotations, setAnnotations] = useState<
+  //   { hanzi: string[]; pinyin: string[] }[] | null
+  // >(null);
+
   const [title, setTitle] = useState<string | null>(null);
   const [titleInput, setTitleInput] = useState('');
   const [textInput, setTextInput] = useState('');
@@ -82,6 +86,15 @@ function Chinese({ setLanguage }: LanguageSelectorProps) {
   // console.log(titleInput);
   // console.log(textInput);
   console.log(lyrics);
+
+  // const flatAnnotations = annotations?.map((element) => {
+  //   return {
+  //     hanzi: element.hanzi.join(''),
+  //     pinyin: element.pinyin.join(''),
+  //   };
+  // });
+
+  // console.log('flat', flatAnnotations);
 
   return (
     <>
