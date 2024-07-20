@@ -101,7 +101,7 @@ function Chinese({ setLanguage }: LanguageSelectorProps) {
       <h1>Chinese</h1>
       <section className='input'>
         <form>
-          <div>
+          <div className='title-input'>
             <label htmlFor='title'>song title</label>
 
             <input
@@ -113,7 +113,7 @@ function Chinese({ setLanguage }: LanguageSelectorProps) {
               placeholder='add a title'
             />
           </div>
-          <div>
+          <div className='text-input'>
             <label htmlFor='chineseInput'>chinese lyrics</label>
 
             <textarea
@@ -125,10 +125,21 @@ function Chinese({ setLanguage }: LanguageSelectorProps) {
               onChange={(e) => setTextInput(e.target.value)}
               placeholder='paste chinese text here'></textarea>
           </div>
-          <div>
-            <p className='helper' onClick={() => setHelper(!helper)}>
-              {!helper ? 'input help' : 'close help'}
-            </p>
+          <div className='input-options'>
+            <div className='input-helper'>
+              <div className='checkbox'>
+                <input
+                  type='checkbox'
+                  id='advanced'
+                  onClick={() => console.log('advanced input not implemented')}
+                />
+                <label htmlFor='advanced'>advanced input</label>
+              </div>
+              <p className='helper' onClick={() => setHelper(!helper)}>
+                {!helper ? 'input help' : 'close help'}
+              </p>
+            </div>
+
             <button className='submit' type='button' onClick={handleClick}>
               Submit
             </button>
