@@ -14,6 +14,10 @@ function Chinese({ setLanguage }: LanguageSelectorProps) {
   const [annotations, setAnnotations] = useState<
     { hanzi: string; pinyin: string }[] | null
   >(null);
+  // const [annotations, setAnnotations] = useState<
+  //   { hanzi: string[]; pinyin: string[] }[] | null
+  // >(null);
+
   const [title, setTitle] = useState<string | null>(null);
   const [titleInput, setTitleInput] = useState('');
   const [textInput, setTextInput] = useState('');
@@ -83,12 +87,21 @@ function Chinese({ setLanguage }: LanguageSelectorProps) {
   // console.log(textInput);
   console.log(lyrics);
 
+  // const flatAnnotations = annotations?.map((element) => {
+  //   return {
+  //     hanzi: element.hanzi.join(''),
+  //     pinyin: element.pinyin.join(''),
+  //   };
+  // });
+
+  // console.log('flat', flatAnnotations);
+
   return (
     <>
       <h1>Chinese</h1>
       <section className='input'>
         <form>
-          <div>
+          <div className='title-input'>
             <label htmlFor='title'>song title</label>
 
             <input
@@ -100,7 +113,7 @@ function Chinese({ setLanguage }: LanguageSelectorProps) {
               placeholder='add a title'
             />
           </div>
-          <div>
+          <div className='text-input'>
             <label htmlFor='chineseInput'>chinese lyrics</label>
 
             <textarea
@@ -112,10 +125,21 @@ function Chinese({ setLanguage }: LanguageSelectorProps) {
               onChange={(e) => setTextInput(e.target.value)}
               placeholder='paste chinese text here'></textarea>
           </div>
-          <div>
-            <p className='helper' onClick={() => setHelper(!helper)}>
-              {!helper ? 'input help' : 'close help'}
-            </p>
+          <div className='input-options'>
+            <div className='input-helper'>
+              <div className='checkbox'>
+                <input
+                  type='checkbox'
+                  id='advanced'
+                  onClick={() => console.log('advanced input not implemented')}
+                />
+                <label htmlFor='advanced'>advanced input</label>
+              </div>
+              <p className='helper' onClick={() => setHelper(!helper)}>
+                {!helper ? 'input help' : 'close help'}
+              </p>
+            </div>
+
             <button className='submit' type='button' onClick={handleClick}>
               Submit
             </button>

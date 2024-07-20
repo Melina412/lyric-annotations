@@ -23,11 +23,34 @@ section.input {
 
     margin-bottom: 20px;
 
-    div {
+    div.title-input,
+    div.text-input,
+    div.input-options {
       display: flex;
       align-items: flex-start;
       flex-direction: column;
       width: 100%;
+    }
+
+    div.input-helper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+      padding-left: 50%;
+    }
+    div.checkbox {
+      display: flex;
+      align-items: center;
+
+      input {
+        margin-bottom: 0;
+      }
+
+      label {
+        font-size: 12px;
+        width: 150%;
+        text-wrap: nowrap;
+      }
     }
     input {
       margin-bottom: 20px;
@@ -137,8 +160,9 @@ section.output {
     div.paragraph {
       padding-bottom: 15px;
     }
-    span.space {
-      padding: 0 10px;
+    span.space,
+    span.other {
+      padding: 0;
     }
   }
   div.download {

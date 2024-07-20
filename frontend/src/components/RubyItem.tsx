@@ -1,6 +1,9 @@
 // const bracketedTextRegex = /(?:\([^)]*\)|\[[^\]]*\]|\{[^}]*\})/;
 const roundBracketsRegex = /\([^)]*\)/g;
 const squareBracketsRegex = /\[[^\]]*\]/g;
+const latinRegex = /[A-Za-z]+/g;
+const punctuationRegex = /[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~\s]/g;
+const numbersRegex = /[0-9]+/g;
 
 // '#' space
 // '%' newline
@@ -14,10 +17,12 @@ function RubyItem({
   rubyText: string;
 }) {
   //# '#' space
-  if (rubyBase === '#') {
-    return <span className='space'></span>;
+  //$ ' ' space
+  if (rubyBase === '#' || rubyBase === ' ') {
+    return <span className='space'> </span>;
     //# '%' newline
-  } else if (rubyBase === '%') {
+    //$ '\n' newline
+  } else if (rubyBase === '%' || rubyBase === '\n') {
     return (
       <>
         <br></br>
@@ -25,7 +30,8 @@ function RubyItem({
       </>
     );
     //# '§' paragraph
-  } else if (rubyBase === '§') {
+    //$ '\n\n' paragraph
+  } else if (rubyBase === '§' || rubyBase === '\n\n') {
     return (
       <>
         <br></br>
@@ -51,6 +57,17 @@ function RubyItem({
     return (
       <>
         <span className='round-brackets'>{rubyBase}</span>
+      </>
+    );
+    //$ latin letters
+  } else if (
+    rubyBase.match(latinRegex) ||
+    rubyBase.match(punctuationRegex) ||
+    rubyBase.match(numbersRegex)
+  ) {
+    return (
+      <>
+        <span className='other'>{rubyBase}</span>
       </>
     );
     //# das ruby item mit der base und den annotations

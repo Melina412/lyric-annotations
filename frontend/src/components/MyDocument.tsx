@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
     paddingRight: 2,
   },
   space: {
-    padding: 6,
+    // padding: 6,
+    padding: 0,
   },
   newline: {
     width: '100%',
@@ -97,9 +98,19 @@ const styles = StyleSheet.create({
     marginBottom: 1,
     fontWeight: 'bold',
   },
+  other: {
+    fontSize: 12,
+    fontFamily: 'Inter Regular',
+    marginBottom: 1,
+    fontWeight: 'bold',
+    padding: 0,
+  },
 });
 const roundBracketsRegex = /\([^)]*\)/g;
 const squareBracketsRegex = /\[[^\]]*\]/g;
+const latinRegex = /[A-Za-z]+/g;
+const punctuationRegex = /[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~\s]/g;
+const numbersRegex = /[0-9]+/g;
 
 const RubyText = ({
   mainText,
@@ -108,11 +119,11 @@ const RubyText = ({
   mainText: string;
   annotation: string;
 }) => {
-  if (mainText === '#') {
+  if (mainText === '#' || mainText === ' ') {
     return <Text style={styles.space}></Text>;
-  } else if (mainText === '%') {
+  } else if (mainText === '%' || mainText === '\n') {
     return <View style={styles.newline}></View>;
-  } else if (mainText === '§') {
+  } else if (mainText === '§' || mainText === '\n\n') {
     return <View style={styles.paragraph}></View>;
   } else if (mainText.match(squareBracketsRegex)) {
     return (
@@ -124,6 +135,16 @@ const RubyText = ({
     return (
       <View style={styles.rubyText}>
         <Text style={styles.roundBrackets}>{mainText}</Text>
+      </View>
+    );
+  } else if (
+    mainText.match(latinRegex) ||
+    mainText.match(punctuationRegex) ||
+    mainText.match(numbersRegex)
+  ) {
+    return (
+      <View style={styles.rubyText}>
+        <Text style={styles.other}>{mainText}</Text>
       </View>
     );
   } else {
