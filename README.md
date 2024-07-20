@@ -2,6 +2,7 @@
 
 docker compose structure with python
 
+```
 project-root/
 │
 ├── backend/
@@ -12,3 +13,4 @@ project-root/
 │ └── shared/ # locally shared folder
 ├── frontend/
 └── docker-compose.yml
+```

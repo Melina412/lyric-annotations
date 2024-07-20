@@ -17,17 +17,15 @@ class FileHandler(FileSystemEventHandler):
                 input_text = data['text']
                 print('input_text', input_text, flush=True)
             
-            # Verarbeite den Text hier (z.B. konvertiere nach Pinyin)
             processed_text = process_text(input_text)
             
-            # Schreibe die Ergebnisse in eine Ausgabedatei
             with open(os.path.join(shared_dir, 'output.json'), 'w', encoding='utf-8') as f:
                 json.dump(processed_text, f)
                 print('text output', processed_text, flush=True)
                 print('text output done ✅', flush=True)
 
 def process_text(text):
-    # Deine Logik zur Verarbeitung des Textes (z.B. Pinyin-Konvertierung)
+    ## pinyin conversion logic
     segments = jieba.cut(text, cut_all=False)
     seg_list = []
     for word in segments:
