@@ -1,26 +1,27 @@
-import { useState, Dispatch, SetStateAction } from 'react';
+import { useState } from 'react';
 import RubyItem from './RubyItem';
 import MyDocument from './MyDocument';
 import { PDFViewer, pdf } from '@react-pdf/renderer';
 import InputHelper from './InputHelper';
+import type { LanguageComponentProps } from '../types';
 
-interface LanguageSelectorProps {
-  setLanguage: Dispatch<
-    SetStateAction<'CHINESE' | 'JAPANESE' | 'KOREAN' | null>
-  >;
-}
-
-function Chinese({ setLanguage }: LanguageSelectorProps) {
-  const [annotations, setAnnotations] = useState<
-    { hanzi: string; pinyin: string }[] | null
-  >(null);
+function Chinese({
+  setLanguage,
+  annotations,
+  setAnnotations,
+  title,
+  setTitle,
+  textInput,
+  setTextInput,
+}: LanguageComponentProps) {
+  // const [annotations, setAnnotations] = useState<Annotations>(null);
   // const [annotations, setAnnotations] = useState<
   //   { hanzi: string[]; pinyin: string[] }[] | null
   // >(null);
 
-  const [title, setTitle] = useState<string | null>(null);
+  // const [title, setTitle] = useState<string | null>(null);
   const [titleInput, setTitleInput] = useState('');
-  const [textInput, setTextInput] = useState('');
+  // const [textInput, setTextInput] = useState('');
   const [lyrics, setLyrics] = useState<{
     titleInput: string;
     textInput: string;
@@ -84,7 +85,7 @@ function Chinese({ setLanguage }: LanguageSelectorProps) {
 
   console.log('annotations:', annotations);
   // console.log(titleInput);
-  // console.log(textInput);
+  console.log('textInput:', textInput);
   console.log(lyrics);
 
   // const flatAnnotations = annotations?.map((element) => {
@@ -149,7 +150,7 @@ function Chinese({ setLanguage }: LanguageSelectorProps) {
         </form>
       </section>
 
-      <section className='output'>
+      {/* <section className='output'>
         {annotations && (
           <>
             <h2>{title}</h2>
@@ -157,8 +158,8 @@ function Chinese({ setLanguage }: LanguageSelectorProps) {
               {annotations.map((object, index) => (
                 <RubyItem
                   key={index}
-                  rubyBase={object.hanzi}
-                  rubyText={object.pinyin}
+                  rubyBase={object.base}
+                  rubyText={object.ruby}
                 />
               ))}
             </div>
@@ -190,7 +191,7 @@ function Chinese({ setLanguage }: LanguageSelectorProps) {
             </div>
           </>
         )}
-      </section>
+      </section> */}
     </>
   );
 }

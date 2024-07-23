@@ -38,19 +38,19 @@ async function watchPythonOutput(res: Response) {
     const splittedHanzi = segments?.hanzi_seg;
     const splittedPinyin = segments?.pinyin_seg;
 
-    let result: { hanzi: string; pinyin: string }[] = [];
+    let result: { base: string; ruby: string }[] = [];
 
     for (let i = 0; i < splittedHanzi?.length; i++) {
       result.push({
-        hanzi: splittedHanzi[i],
-        pinyin: splittedPinyin[i],
+        base: splittedHanzi[i],
+        ruby: splittedPinyin[i],
       });
     }
 
-    result = result?.map((element: { hanzi: string; pinyin: string }) => {
+    result = result?.map((element: { base: string; ruby: string }) => {
       return {
-        hanzi: [element.hanzi].join(''),
-        pinyin: [element.pinyin].join(''),
+        base: [element.base].join(''),
+        ruby: [element.ruby].join(''),
       };
     });
 
@@ -133,10 +133,10 @@ export async function addPinyin(req: Request, res: Response) {
         }
 
         // result als array speichern damit die reihenflge beibehalten (wird im gegensatz zu objekt)
-        const result: { hanzi: string; pinyin: string }[] = [];
+        const result: { base: string; ruby: string }[] = [];
 
         for (let i = 0; i < splittedHanzi.length; i++) {
-          result.push({ hanzi: splittedHanzi[i], pinyin: splittedPinyin[i] });
+          result.push({ base: splittedHanzi[i], ruby: splittedPinyin[i] });
         }
 
         console.log(result);

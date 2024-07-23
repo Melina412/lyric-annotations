@@ -12,6 +12,8 @@ import NotoSansSCRegular from '/fonts/Noto_Sans_SC/static/NotoSansSC-Regular.ttf
 import NotoSansSCSemiBold from '/fonts/Noto_Sans_SC/static/NotoSansSC-SemiBold.ttf';
 import InterRegular from '/fonts/Inter/static/Inter-Regular.ttf';
 
+import type { PdfContent } from '../types';
+
 Font.register({
   family: 'Noto Sans SC Light',
   src: NotoSansSCLight,
@@ -52,18 +54,22 @@ const styles = StyleSheet.create({
     // paddingRight: 3,
   },
   text: {
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: 'Noto Sans SC Regular',
     marginBottom: 2,
+    paddingLeft: 2,
+    paddingRight: 2,
+    letterSpacing: 2,
   },
   annotation: {
-    fontSize: 7,
+    fontSize: 8,
     fontFamily: 'Inter Regular',
     lineHeight: 1,
     textAlign: 'center',
     position: 'absolute',
     top: -5,
     width: '100%',
+    whiteSpace: 'nowrap',
   },
   rubyText: {
     flexDirection: 'column',
@@ -73,6 +79,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingLeft: 2,
     paddingRight: 2,
+    whiteSpace: 'nowrap',
   },
   space: {
     // padding: 6,
@@ -157,22 +164,14 @@ const RubyText = ({
   }
 };
 
-const MyDocument = ({
-  content,
-}: {
-  content: { title: string; text: { hanzi: string; pinyin: string }[] };
-}) => (
+const MyDocument = ({ content }: { content: PdfContent }) => (
   <Document>
     <Page size='A4' style={styles.page}>
       <View style={styles.section}>
         <Text style={styles.title}>{content.title}</Text>
         <View style={styles.textContainer}>
-          {content.text.map((item, index) => (
-            <RubyText
-              key={index}
-              mainText={item.hanzi}
-              annotation={item.pinyin}
-            />
+          {content.text?.map((item, index) => (
+            <RubyText key={index} mainText={item.base} annotation={item.ruby} />
           ))}
         </View>
       </View>

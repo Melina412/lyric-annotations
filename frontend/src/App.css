@@ -66,6 +66,13 @@ section.input {
     button.submit {
       margin-bottom: 50px;
     }
+
+    div.hint {
+      span.verify-option {
+        color: deepskyblue;
+        cursor: pointer;
+      }
+    }
   }
 
   .helper {
@@ -146,6 +153,14 @@ section.output {
           font-size: 12px;
           font-family: sans-serif;
           } */
+      .hangul {
+        font-family: 'Nanum Myeongjo';
+        font-weight: bold;
+        letter-spacing: 2px;
+      }
+      .romaja {
+        /* margin: 0 2px; */
+      }
     }
     .square-brackets {
       font-size: 15px;
