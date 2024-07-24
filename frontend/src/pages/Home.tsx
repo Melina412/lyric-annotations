@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Chinese from '../components/Chinese';
 import Japanese from '../components/Japanese';
 import Korean from '../components/Korean';
@@ -10,8 +10,16 @@ function Home() {
   const [language, setLanguage] = useState<Language>(null);
   const [annotations, setAnnotations] = useState<Annotations>(null);
   const [title, setTitle] = useState<string | null>(null);
-  const [textInput, setTextInput] = useState<string>('');
   const [hint, setHint] = useState<boolean>(false);
+  const [lyrics, setLyrics] = useState<{
+    titleInput: string;
+    textInput: string;
+  }>({
+    titleInput: '',
+    textInput: '',
+  });
+  const [helper, setHelper] = useState<boolean>(false);
+  const [scriptLoaded, setScriptLoaded] = useState<boolean>(false);
 
   console.log({ language });
 
@@ -19,8 +27,13 @@ function Home() {
     title: title,
     text: annotations,
   };
-  const letterPercentage = checkPercentage(textInput);
+  const letterPercentage = checkPercentage(lyrics.textInput);
   console.log('letterPercentage:', letterPercentage);
+
+  useEffect(() => {
+    setAnnotations(null);
+  }, [language]);
+
   return (
     <>
       <p>pick a language:</p>
@@ -37,11 +50,15 @@ function Home() {
           setAnnotations={setAnnotations}
           title={title}
           setTitle={setTitle}
-          textInput={textInput}
-          setTextInput={setTextInput}
           hint={hint}
           setHint={setHint}
           letterPercentage={letterPercentage}
+          lyrics={lyrics}
+          setLyrics={setLyrics}
+          helper={helper}
+          setHelper={setHelper}
+          scriptLoaded={scriptLoaded}
+          setScriptLoaded={setScriptLoaded}
         />
       )}
       {language === 'JAPANESE' && <Japanese setLanguage={setLanguage} />}
@@ -53,11 +70,15 @@ function Home() {
           setAnnotations={setAnnotations}
           title={title}
           setTitle={setTitle}
-          textInput={textInput}
-          setTextInput={setTextInput}
           hint={hint}
           setHint={setHint}
           letterPercentage={letterPercentage}
+          lyrics={lyrics}
+          setLyrics={setLyrics}
+          helper={helper}
+          setHelper={setHelper}
+          scriptLoaded={scriptLoaded}
+          setScriptLoaded={setScriptLoaded}
         />
       )}
       <Output annotations={annotations} content={content} />

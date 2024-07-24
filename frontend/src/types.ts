@@ -6,14 +6,13 @@ declare global {
   }
   interface Window {
     Aromanize: {};
+    pinyinUtil: {
+      getPinyin(text: string, delimiter?: string, withTone?: boolean): string;
+    };
   }
 }
 
 export type Language = 'CHINESE' | 'JAPANESE' | 'KOREAN' | null;
-
-// export interface SetLanguage {
-//   setLanguage: Dispatch<SetStateAction<Language>>;
-// }
 
 type Annotation = {
   base: string;
@@ -22,10 +21,6 @@ type Annotation = {
 
 export type Annotations = Annotation[] | null;
 
-// export interface SetAnnotations {
-//   setAnnotations: Dispatch<SetStateAction<Annotations>>;
-// }
-
 export interface LanguageComponentProps {
   language: Language;
   setLanguage: Dispatch<SetStateAction<Language>>;
@@ -33,11 +28,17 @@ export interface LanguageComponentProps {
   setAnnotations: Dispatch<SetStateAction<Annotations>>;
   title: string | null;
   setTitle: Dispatch<SetStateAction<string | null>>;
-  textInput: string;
-  setTextInput: Dispatch<SetStateAction<string>>;
   hint: boolean;
   setHint: Dispatch<SetStateAction<boolean>>;
   letterPercentage: { [key: string]: number };
+  lyrics: { titleInput: string; textInput: string };
+  setLyrics: Dispatch<
+    SetStateAction<{ titleInput: string; textInput: string }>
+  >;
+  helper: boolean;
+  setHelper: Dispatch<SetStateAction<boolean>>;
+  scriptLoaded: boolean;
+  setScriptLoaded: Dispatch<SetStateAction<boolean>>;
 }
 
 export type PdfContent = {
