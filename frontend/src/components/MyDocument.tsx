@@ -12,6 +12,8 @@ import NotoSansSCRegular from '/fonts/Noto_Sans_SC/static/NotoSansSC-Regular.ttf
 import NotoSansSCSemiBold from '/fonts/Noto_Sans_SC/static/NotoSansSC-SemiBold.ttf';
 import InterRegular from '/fonts/Inter/static/Inter-Regular.ttf';
 
+import type { PdfContent } from '../types';
+
 Font.register({
   family: 'Noto Sans SC Light',
   src: NotoSansSCLight,
@@ -48,24 +50,40 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
-    // paddingLeft: 3,
-    // paddingRight: 3,
+    // backgroundColor: 'lightgreen',
   },
   text: {
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: 'Noto Sans SC Regular',
-    marginBottom: 2,
+    marginBottom: 0,
+    paddingLeft: 2,
+    paddingRight: 2,
+    letterSpacing: 2,
+    lineHeight: 1,
+    // backgroundColor: 'lightblue',
   },
   annotation: {
-    fontSize: 7,
+    fontSize: 8,
     fontFamily: 'Inter Regular',
     lineHeight: 1,
     textAlign: 'center',
     position: 'absolute',
-    top: -5,
-    width: '100%',
+    top: -3.5,
+    width: '120%',
+    whiteSpace: 'nowrap',
+    // backgroundColor: 'lightcoral',
   },
   rubyText: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: 3,
+    position: 'relative',
+    textAlign: 'center',
+    paddingLeft: 2,
+    paddingRight: 2,
+    whiteSpace: 'nowrap',
+  },
+  otherText: {
     flexDirection: 'column',
     alignItems: 'center',
     // marginBottom: 4,
@@ -73,18 +91,32 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingLeft: 2,
     paddingRight: 2,
+    whiteSpace: 'nowrap',
+    // backgroundColor: 'lightblue',
+  },
+  punctuationText: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    // marginBottom: 4,
+    position: 'relative',
+    textAlign: 'center',
+    paddingLeft: 0,
+    paddingRight: 0,
+    whiteSpace: 'nowrap',
   },
   space: {
     // padding: 6,
     padding: 0,
+    // backgroundColor: 'mediumblue',
   },
   newline: {
     width: '100%',
-    height: 12,
+    height: 8,
+    // backgroundColor: 'purple',
   },
   paragraph: {
     width: '100%',
-    height: 24,
+    height: 20,
   },
   squareBrackets: {
     fontSize: 12,
@@ -101,13 +133,26 @@ const styles = StyleSheet.create({
   other: {
     fontSize: 12,
     fontFamily: 'Inter Regular',
-    marginBottom: 1,
+    marginBottom: 0,
     fontWeight: 'bold',
     padding: 0,
+    lineHeight: 1,
+    // backgroundColor: 'lightseagreen',
+  },
+  punctuation: {
+    fontSize: 12,
+    fontFamily: 'Roboto Regular',
+    marginBottom: 0,
+    padding: 0,
+    lineHeight: 1,
+    letterSpacing: 0.5,
+    // backgroundColor: 'lightgreen',
   },
 });
-const roundBracketsRegex = /\([^)]*\)/g;
-const squareBracketsRegex = /\[[^\]]*\]/g;
+// YALLA WIE KANN MAN DIESE VERDAMMTEN ABSTÄNDE BEI DEN KLAMMERN UND SO VERKLEINERN 😖
+
+// const roundBracketsRegex = /\([^)]*\)/g;
+// const squareBracketsRegex = /\[[^\]]*\]/g;
 const latinRegex = /[A-Za-z]+/g;
 const punctuationRegex = /[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~\s]/g;
 const numbersRegex = /[0-9]+/g;
@@ -125,25 +170,27 @@ const RubyText = ({
     return <View style={styles.newline}></View>;
   } else if (mainText === '§' || mainText === '\n\n') {
     return <View style={styles.paragraph}></View>;
-  } else if (mainText.match(squareBracketsRegex)) {
+    // } else if (mainText.match(squareBracketsRegex)) {
+    //   return (
+    //     <View style={styles.otherText}>
+    //       <Text style={styles.squareBrackets}>{mainText}</Text>
+    //     </View>
+    //   );
+    // } else if (mainText.match(roundBracketsRegex)) {
+    //   return (
+    //     <View style={styles.otherText}>
+    //       <Text style={styles.roundBrackets}>{mainText}</Text>
+    //     </View>
+    //   );
+  } else if (mainText.match(punctuationRegex)) {
     return (
-      <View style={styles.rubyText}>
-        <Text style={styles.squareBrackets}>{mainText}</Text>
+      <View style={styles.punctuationText}>
+        <Text style={styles.other}>{mainText}</Text>
       </View>
     );
-  } else if (mainText.match(roundBracketsRegex)) {
+  } else if (mainText.match(latinRegex) || mainText.match(numbersRegex)) {
     return (
-      <View style={styles.rubyText}>
-        <Text style={styles.roundBrackets}>{mainText}</Text>
-      </View>
-    );
-  } else if (
-    mainText.match(latinRegex) ||
-    mainText.match(punctuationRegex) ||
-    mainText.match(numbersRegex)
-  ) {
-    return (
-      <View style={styles.rubyText}>
+      <View style={styles.otherText}>
         <Text style={styles.other}>{mainText}</Text>
       </View>
     );
@@ -157,22 +204,14 @@ const RubyText = ({
   }
 };
 
-const MyDocument = ({
-  content,
-}: {
-  content: { title: string; text: { hanzi: string; pinyin: string }[] };
-}) => (
+const MyDocument = ({ content }: { content: PdfContent }) => (
   <Document>
     <Page size='A4' style={styles.page}>
       <View style={styles.section}>
         <Text style={styles.title}>{content.title}</Text>
         <View style={styles.textContainer}>
-          {content.text.map((item, index) => (
-            <RubyText
-              key={index}
-              mainText={item.hanzi}
-              annotation={item.pinyin}
-            />
+          {content.text?.map((item, index) => (
+            <RubyText key={index} mainText={item.base} annotation={item.ruby} />
           ))}
         </View>
       </View>

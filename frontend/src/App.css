@@ -66,6 +66,16 @@ section.input {
     button.submit {
       margin-bottom: 50px;
     }
+
+    div.hint {
+      span.verify-option {
+        color: deepskyblue;
+        cursor: pointer;
+      }
+    }
+  }
+  .test {
+    color: light;
   }
 
   .helper {
@@ -124,10 +134,18 @@ section.input {
   }
 }
 
+#text {
+  line-height: 0.5;
+}
+
 /* $ ***** section output ***** */
 
 section.output {
   margin-top: 50px;
+
+  h2 {
+    margin-bottom: 20px;
+  }
   .output-text {
     font-size: 24px;
     margin-bottom: 50px;
@@ -136,8 +154,12 @@ section.output {
       padding: 0 1px;
     }
     ruby {
+      line-height: 1.5;
       span {
-        line-height: -1px;
+        line-height: 0.5;
+      }
+      rt.romaja {
+        font-size: 60%;
       }
       /* .hanzi {
         font-family: HanziPen SC;
@@ -146,6 +168,11 @@ section.output {
           font-size: 12px;
           font-family: sans-serif;
           } */
+      .hangul {
+        font-family: 'Nanum Myeongjo';
+        font-weight: bold;
+        letter-spacing: 2px;
+      }
     }
     .square-brackets {
       font-size: 15px;
@@ -178,6 +205,31 @@ section.output {
     button {
       margin: 0 15px 20px 0;
     }
+  }
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #textToPrint,
+  #textToPrint * {
+    visibility: visible;
+  }
+  #textToPrint {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: black;
+
+    font-size: 16px;
+    /* padding: 40px 30px; */
+    /* dark mode */
+    /* background-color: #242424;
+    color: #e3e3e3; */
+  }
+  .newline {
+    padding-bottom: 0;
   }
 }
 

@@ -4,6 +4,12 @@ const squareBracketsRegex = /\[[^\]]*\]/g;
 const latinRegex = /[A-Za-z]+/g;
 const punctuationRegex = /[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~\s]/g;
 const numbersRegex = /[0-9]+/g;
+const hangulRegex = /([\uAC00-\uD7A3]|[ \t\n.,!?(){}\[\]<>:;"'-])/;
+const hanziRegex = /[\u4E00-\u9FFF]/;
+const kanjiRegex = /([\u4E00-\u9FAF]|[ \t\n.,!?(){}\[\]<>:;"'-])/;
+const kanaRegex = /([\u3040-\u309F\u30A0-\u30FF]|[ \t\n.,!?(){}\[\]<>:;"'-])/;
+const japaneseRegex =
+  /([\u4E00-\u9FAF\u3040-\u309F\u30A0-\u30FF]|[ \t\n.,!?(){}\[\]<>:;"'-])/;
 
 // '#' space
 // '%' newline
@@ -16,6 +22,24 @@ function RubyItem({
   rubyBase: string;
   rubyText: string;
 }) {
+  const rubyBaseClass = rubyBase.match(hanziRegex)
+    ? 'hanzi'
+    : rubyBase.match(hangulRegex)
+    ? 'hangul'
+    : rubyBase.match(kanjiRegex)
+    ? 'kanji'
+    : rubyBase.match(kanaRegex)
+    ? 'kana'
+    : '';
+
+  const rubyTextClass = rubyBase.match(hanziRegex)
+    ? 'pinyin'
+    : rubyBase.match(hangulRegex)
+    ? 'romaja'
+    : rubyBase.match(kanjiRegex) || rubyBase.match(kanaRegex)
+    ? 'romaji'
+    : '';
+
   //# '#' space
   //$ ' ' space
   if (rubyBase === '#' || rubyBase === ' ') {
@@ -76,8 +100,8 @@ function RubyItem({
       <>
         <span>
           <ruby>
-            <span className='hanzi'>{rubyBase}</span>
-            <rt className='pinyin'>{rubyText}</rt>
+            <span className={rubyBaseClass}>{rubyBase}</span>
+            <rt className={rubyTextClass}>{rubyText}</rt>
           </ruby>
         </span>
       </>
