@@ -10,7 +10,7 @@ const japaneseRegex =
 export function checkPercentage(text: string) {
   // const filteredText = text.replace(/[^\p{L}\p{N}]+/gu, '');
   const filteredText = text.replace(/[^\p{L}\p{N}]+/gu, '');
-  console.log(filteredText);
+  // console.log(filteredText);
 
   const totalCharacters = filteredText.length;
 
@@ -39,7 +39,7 @@ export function checkPercentage(text: string) {
 
   const matchingPercentage: { [key: string]: number } = {};
   for (const language in matchingCharacters) {
-    console.log(matchingCharacters[language], totalCharacters);
+    // console.log(matchingCharacters[language], totalCharacters);
     matchingPercentage[language] = Math.round(
       (matchingCharacters[language] / totalCharacters) * 100
     );
