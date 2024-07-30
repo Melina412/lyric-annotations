@@ -12,6 +12,21 @@
 
 /* ********************************************************************* */
 
+section.language-selector {
+  p {
+    margin-bottom: 20px;
+  }
+  div {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
 /* $ ***** section input ***** */
 
 section.input {
@@ -30,6 +45,7 @@ section.input {
       align-items: flex-start;
       flex-direction: column;
       width: 100%;
+      padding-bottom: 10px;
     }
 
     div.input-helper {
@@ -66,12 +82,12 @@ section.input {
     button.submit {
       margin-bottom: 50px;
     }
-
     div.hint {
       span.verify-option {
         color: deepskyblue;
         cursor: pointer;
       }
+      margin-bottom: 20px;
     }
   }
   .test {
@@ -213,16 +229,21 @@ section.output {
     font-size: 24px;
     margin-bottom: 50px;
 
-    span {
-      padding: 0 1px;
+    span.ruby-item {
+      /* padding: 0 1px; */
     }
     ruby {
-      line-height: 1.5;
+      display: inline-flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      line-height: 1;
+
       span {
-        line-height: 0.5;
+        line-height: 1;
       }
       rt.romaja {
-        font-size: 60%;
+        font-size: 50%;
+        padding-bottom: 2px;
       }
       /* .hanzi {
         font-family: HanziPen SC;
@@ -232,13 +253,20 @@ section.output {
           font-family: sans-serif;
           } */
       .hangul {
-        font-family: 'Nanum Myeongjo';
+        /* font-family: 'Nanum Myeongjo';
         font-weight: bold;
-        letter-spacing: 2px;
+        letter-spacing: 2px; */
       }
       .kanji {
         cursor: help;
       }
+    }
+
+    span.other {
+      /* padding: 0; */
+      display: inline-flex;
+      flex-direction: column-reverse;
+      line-height: 1;
     }
     .square-brackets {
       font-size: 15px;
@@ -252,10 +280,6 @@ section.output {
     }
     div.paragraph {
       padding-bottom: 15px;
-    }
-    span.space,
-    span.other {
-      padding: 0;
     }
   }
   div.download {

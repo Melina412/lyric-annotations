@@ -97,14 +97,17 @@ function RubyItem({
   ) {
     return (
       <>
-        <span className='other'>{rubyBase}</span>
+        <span className='other'>
+          {rubyBase}
+          <rt></rt>
+        </span>
       </>
     );
     //# das ruby item mit der base und den annotations
   } else {
     return (
       <>
-        <span>
+        <span className='ruby-item'>
           <ruby>
             <span className={rubyBaseClass}>{rubyBase}</span>
             <rt className={rubyTextClass}>{rubyText}</rt>

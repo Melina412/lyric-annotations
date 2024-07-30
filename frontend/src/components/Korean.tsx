@@ -149,7 +149,7 @@ function Korean({
                   placeholder='paste korean text here'></textarea>
               </div>
               <div className='input-options'>
-                <div className='input-helper'>
+                {/* <div className='input-helper'>
                   <div className='checkbox'>
                     <input
                       type='checkbox'
@@ -159,11 +159,12 @@ function Korean({
                       }
                     />
                     <label htmlFor='advanced'>advanced input</label>
-                  </div>
+                  </div>              
                   <p className='helper' onClick={() => setHelper(!helper)}>
                     {!helper ? 'input help' : 'close help'}
                   </p>
-                </div>
+                </div> */}
+
                 {hint && (
                   <div className='hint'>
                     <p>
@@ -202,7 +203,7 @@ function Korean({
                   Submit
                 </button>
 
-                {helper && <InputHelper setLanguage={setLanguage} />}
+                {/* {helper && <InputHelper setLanguage={setLanguage} />} */}
               </div>
             </form>
           </section>

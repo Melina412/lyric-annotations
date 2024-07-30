@@ -195,7 +195,7 @@ function Chinese({
                   placeholder='paste chinese text here'></textarea>
               </div>
               <div className='input-options'>
-                <div className='input-helper'>
+                {/* <div className='input-helper'>
                   <div className='checkbox'>
                     <input
                       type='checkbox'
@@ -209,7 +209,7 @@ function Chinese({
                   <p className='helper' onClick={() => setHelper(!helper)}>
                     {!helper ? 'input help' : 'close help'}
                   </p>
-                </div>
+                </div> */}
 
                 {hint && (
                   <div className='hint'>
@@ -249,7 +249,7 @@ function Chinese({
                   Submit
                 </button>
 
-                {helper && <InputHelper setLanguage={setLanguage} />}
+                {/* {helper && <InputHelper setLanguage={setLanguage} />} */}
               </div>
             </form>
           </section>

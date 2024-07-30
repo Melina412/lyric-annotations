@@ -36,12 +36,14 @@ function Home() {
 
   return (
     <>
-      <p>pick a language:</p>
-      <div>
-        <button onClick={() => setLanguage('CHINESE')}>Chinese</button>
-        <button onClick={() => setLanguage('JAPANESE')}>Japanese</button>
-        <button onClick={() => setLanguage('KOREAN')}>Korean</button>
-      </div>
+      <section className='language-selector'>
+        <p>Select a language!</p>
+        <div>
+          <button onClick={() => setLanguage('CHINESE')}>Chinese</button>
+          <button onClick={() => setLanguage('JAPANESE')}>Japanese</button>
+          <button onClick={() => setLanguage('KOREAN')}>Korean</button>
+        </div>
+      </section>
       {language === 'CHINESE' && (
         <Chinese
           language={language}

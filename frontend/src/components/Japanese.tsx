@@ -168,7 +168,7 @@ function Japanese({
               placeholder='paste japanese text here'></textarea>
           </div>
           <div className='input-options'>
-            <div className='input-helper'>
+            {/* <div className='input-helper'>
               <div className='checkbox'>
                 <input
                   type='checkbox'
@@ -180,7 +180,7 @@ function Japanese({
               <p className='helper' onClick={() => setHelper(!helper)}>
                 {!helper ? 'input help' : 'close help'}
               </p>
-            </div>
+            </div> */}
 
             {hint && (
               <div className='hint'>
