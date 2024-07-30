@@ -38,13 +38,13 @@ function Korean({
   // # checks if script is loaded  ---------------------------------------
   useEffect(() => {
     const checkScriptLoaded = () => {
-      console.log('checking window.Aromanize:', window.Aromanize);
+      console.log('checking window.Aromanize...', window.Aromanize);
       if (
         window.String &&
         typeof window.String.prototype.romanize === 'function'
       ) {
         setScriptLoaded(true);
-        console.log('romanize function loaded ✅');
+        console.log('✅ Aromanize available; romanize() function loaded');
         clearInterval(intervalId); // stop interval once the script is loaded
       } else {
         console.log('🛑 Aromanize is not available');
@@ -132,7 +132,7 @@ function Korean({
                 />
               </div>
               <div className='text-input'>
-                <label htmlFor='koreanInput'>korean lyrics</label>
+                <label htmlFor='korean-input'>korean lyrics</label>
 
                 <textarea
                   name='koreanInput'

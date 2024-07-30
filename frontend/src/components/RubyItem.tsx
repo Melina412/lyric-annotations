@@ -5,12 +5,13 @@ const latinRegex = /[A-Za-z]+/g;
 const punctuationRegex = /[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~\s]/g;
 const numbersRegex = /[0-9]+/g;
 const hangulRegex = /([\uAC00-\uD7A3]|[ \t\n.,!?(){}\[\]<>:;"'-])/;
-const hanziRegex = /[\u4E00-\u9FFF]/;
+const hanziRegex = /([\u4E00-\u9FFF]|[ \t\n.,!?(){}\[\]<>:;"'-])/;
 const kanjiRegex = /([\u4E00-\u9FAF]|[ \t\n.,!?(){}\[\]<>:;"'-])/;
 const kanaRegex = /([\u3040-\u309F\u30A0-\u30FF]|[ \t\n.,!?(){}\[\]<>:;"'-])/;
-const japaneseRegex =
-  /([\u4E00-\u9FAF\u3040-\u309F\u30A0-\u30FF]|[ \t\n.,!?(){}\[\]<>:;"'-])/;
 
+import type { Language } from '../types';
+
+// old text procesing logic
 // '#' space
 // '%' newline
 // '§' paragraph
@@ -18,27 +19,32 @@ const japaneseRegex =
 function RubyItem({
   rubyBase,
   rubyText,
+  language,
 }: {
   rubyBase: string;
   rubyText: string;
+  language: Language;
 }) {
-  const rubyBaseClass = rubyBase.match(hanziRegex)
-    ? 'hanzi'
-    : rubyBase.match(hangulRegex)
-    ? 'hangul'
-    : rubyBase.match(kanjiRegex)
-    ? 'kanji'
-    : rubyBase.match(kanaRegex)
-    ? 'kana'
-    : '';
+  const rubyBaseClass =
+    rubyBase.match(kanjiRegex) && language === 'JAPANESE'
+      ? 'kanji'
+      : rubyBase.match(kanaRegex) && language === 'JAPANESE'
+      ? 'kana'
+      : rubyBase.match(hanziRegex) && language === 'CHINESE'
+      ? 'hanzi'
+      : rubyBase.match(hangulRegex)
+      ? 'hangul'
+      : '';
 
-  const rubyTextClass = rubyBase.match(hanziRegex)
-    ? 'pinyin'
-    : rubyBase.match(hangulRegex)
-    ? 'romaja'
-    : rubyBase.match(kanjiRegex) || rubyBase.match(kanaRegex)
-    ? 'romaji'
-    : '';
+  const rubyTextClass =
+    (language === 'JAPANESE' && rubyBase.match(kanjiRegex)) ||
+    rubyBase.match(kanaRegex)
+      ? 'romaji'
+      : rubyBase.match(hanziRegex)
+      ? 'pinyin'
+      : rubyBase.match(hangulRegex)
+      ? 'romaja'
+      : '';
 
   //# '#' space
   //$ ' ' space

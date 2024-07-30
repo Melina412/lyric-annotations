@@ -52,4 +52,5 @@ export interface OutputProps {
     title: string | null;
     text: Annotations;
   };
+  language: Language;
 }

@@ -146,6 +146,69 @@ section.output {
   h2 {
     margin-bottom: 20px;
   }
+
+  dialog#modal {
+    width: 80vw;
+    margin: auto;
+    padding: 20px;
+    background-color: #242424;
+    color: rgba(255, 255, 255, 0.87);
+    border-color: #646cff;
+    border-radius: 15px;
+
+    div.modal-box {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    div.alt-readings {
+      margin: 10px 0;
+    }
+
+    p {
+      font-size: 22px;
+      padding: 5px 0;
+
+      #expression {
+        font-size: 24px;
+        /* font-family: YuKyokasho; */
+      }
+    }
+
+    button {
+      margin-top: 10px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    ul {
+      padding-left: 30px;
+      font-size: 24px;
+      margin-bottom: 10px;
+
+      li {
+        span {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
+  /* div#kanjiHelp.active,
+  div#readings.active { */
+  div.active {
+    display: block;
+  }
+
+  /* div#kanjiHelp.inactive,
+  div#readings.inactive { */
+  div.inactive {
+    display: none;
+  }
+
   .output-text {
     font-size: 24px;
     margin-bottom: 50px;
@@ -172,6 +235,9 @@ section.output {
         font-family: 'Nanum Myeongjo';
         font-weight: bold;
         letter-spacing: 2px;
+      }
+      .kanji {
+        cursor: help;
       }
     }
     .square-brackets {
@@ -201,10 +267,13 @@ section.output {
       width: 100%;
       height: 600px;
     }
-
     button {
       margin: 0 15px 20px 0;
     }
+  }
+
+  button#print {
+    margin-bottom: 20px;
   }
 }
 

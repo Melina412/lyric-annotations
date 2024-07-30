@@ -39,10 +39,10 @@ function Chinese({
   useEffect(() => {
     const checkScriptLoaded = () => {
       let pinyinUtil = window.pinyinUtil;
-      console.log('checking window.pinyinUtil:', pinyinUtil);
+      console.log('checking window.pinyinUtil...', pinyinUtil);
       if (pinyinUtil && typeof pinyinUtil.getPinyin === 'function') {
         setScriptLoaded(true);
-        console.log('getPinyin function loaded ✅');
+        console.log('✅ pinyinUtil available; getPinyin() function loaded');
         clearInterval(intervalId); // stop interval once the script is loaded
       } else {
         console.log('🛑 pinyinUtil is not available');
@@ -178,7 +178,7 @@ function Chinese({
                 />
               </div>
               <div className='text-input'>
-                <label htmlFor='chineseInput'>chinese lyrics</label>
+                <label htmlFor='chinese-input'>chinese lyrics</label>
 
                 <textarea
                   name='chineseInput'

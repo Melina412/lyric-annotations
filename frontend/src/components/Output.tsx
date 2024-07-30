@@ -1,8 +1,10 @@
 import type { OutputProps } from '../types';
 import PdfDownloader from './PdfDownloader';
 import RubyItem from './RubyItem';
+import KanjiHelp from './KanjiHelp';
 
-function Output({ annotations, content }: OutputProps) {
+function Output({ annotations, content, language }: OutputProps) {
+  // drucken des divs #textToPrint über browserprint
   function printText() {
     const element = document.getElementById('textToPrint');
 
@@ -23,9 +25,12 @@ function Output({ annotations, content }: OutputProps) {
       }, 0);
     }
   }
+
   return (
     <>
       <section className='output'>
+        <KanjiHelp annotations={annotations} />
+
         {annotations && (
           <>
             <div id='textToPrint'>
@@ -36,13 +41,20 @@ function Output({ annotations, content }: OutputProps) {
                     key={index}
                     rubyBase={object.base}
                     rubyText={object.ruby}
+                    language={language}
                   />
                 ))}
               </div>
             </div>
-            <button onClick={printText}>Print</button>
+            <button id='print' onClick={printText}>
+              Print
+            </button>
 
-            <PdfDownloader annotations={annotations} content={content} />
+            <PdfDownloader
+              annotations={annotations}
+              content={content}
+              language={language}
+            />
           </>
         )}
       </section>
