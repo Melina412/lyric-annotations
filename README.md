@@ -15,6 +15,16 @@ project-root/
 └── docker-compose.yml
 ```
 
+docker compose structure without python
+
+```
+project-root/
+│
+├── backend/
+├── frontend/
+└── docker-compose.yml
+```
+
 ### sample text
 
 [Verse_1]

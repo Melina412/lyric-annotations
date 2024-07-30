@@ -8,7 +8,7 @@ services:
       - mongodata:/data/db
 
   backend:
-    build: ./backend/node
+    build: ./backend
     container_name: node
     ports:
       - $BACKENDPORT:3000
@@ -18,19 +18,19 @@ services:
     environment:
       - MONGODB_URI=$MONGODB
     volumes:
-      - ./backend/node:/app
-      - ./backend/shared:/app/shared
+      - ./backend:/app
+      # - ./backend/shared:/app/shared
     depends_on:
       - database
 
-  python:
-    build: ./backend/python
-    container_name: python
-    networks:
-      - backend
-    volumes:
-      - ./backend/python:/app
-      - ./backend/shared:/app/shared
+  # python:
+  #   build: ./backend/python
+  #   container_name: python
+  #   networks:
+  #     - backend
+  #   volumes:
+  #     - ./backend/python:/app
+  #     - ./backend/shared:/app/shared
 
   frontend:
     build: ./frontend

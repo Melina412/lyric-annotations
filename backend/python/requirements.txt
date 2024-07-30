@@ -1,4 +1,0 @@
-ipykernel
-jieba
-pypinyin
-watchdog
