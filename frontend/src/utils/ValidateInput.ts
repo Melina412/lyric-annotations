@@ -6,7 +6,7 @@ const latinRegex = /[A-Za-z]+/g;
 const japaneseRegex =
   /[\u3040-\u309F\u30A0-\u30FF]|(?:\u3400-\u4DBF|\u4E00-\u9FFF|\uF900-\uFAFF)(?![\u4E00-\u9FFF])/;
 
-export default function checkPercentage(text: string) {
+export function checkPercentage(text: string) {
   // const filteredText = text.replace(/[^\p{L}\p{N}]+/gu, '');
   const filteredText = text.replace(/[^\p{L}\p{N}]+/gu, '');
   // console.log(filteredText);
