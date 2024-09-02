@@ -7,7 +7,6 @@ import * as wanakana from 'wanakana';
 
 function Japanese({
   setLanguage,
-  annotations,
   setAnnotations,
   setTitle,
   letterPercentage,
@@ -15,8 +14,6 @@ function Japanese({
   setHint,
   lyrics,
   setLyrics,
-  helper,
-  setHelper,
 }: LanguageComponentProps) {
   const [validatedJp, setValidatedJp] = useState(false);
   const [tokens, setTokens] = useState<

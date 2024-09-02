@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import InputHelper from './InputHelper';
 import type { LanguageComponentProps } from '../types';
 
 function Chinese({
@@ -13,8 +12,6 @@ function Chinese({
   setHint,
   lyrics,
   setLyrics,
-  helper,
-  setHelper,
   scriptLoaded,
   setScriptLoaded,
 }: LanguageComponentProps) {
