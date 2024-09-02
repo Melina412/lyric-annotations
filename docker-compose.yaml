@@ -6,9 +6,10 @@ services:
       - backend
     volumes:
       - mongodata:/data/db
+
   backend:
     build: ./backend
-    container_name: server
+    container_name: node
     ports:
       - $BACKENDPORT:3000
     networks:
@@ -18,8 +19,19 @@ services:
       - MONGODB_URI=$MONGODB
     volumes:
       - ./backend:/app
+      # - ./backend/shared:/app/shared
     depends_on:
       - database
+
+  # python:
+  #   build: ./backend/python
+  #   container_name: python
+  #   networks:
+  #     - backend
+  #   volumes:
+  #     - ./backend/python:/app
+  #     - ./backend/shared:/app/shared
+
   frontend:
     build: ./frontend
     container_name: vite

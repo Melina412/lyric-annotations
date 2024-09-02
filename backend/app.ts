@@ -3,8 +3,9 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
-import { addPinyin } from './src/chinese/chinese.controller';
-import { router as chineseRouter } from './src/chinese/chinese.router';
+// import { addPinyin } from './src/chinese/chinese.controller';
+// import { router as chineseRouter } from './src/chinese/chinese.router';
+import { router as japaneseRouter } from './src/japanese/japanese.router';
 import morgan from 'morgan';
 
 const app = express();
@@ -13,7 +14,8 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
-app.use('/api/chinese', chineseRouter);
+// app.use('/api/chinese', chineseRouter);
+app.use('/api/japanese', japaneseRouter);
 
 app.listen(PORT, () => {
   console.log('✅ express server on port', PORT);
