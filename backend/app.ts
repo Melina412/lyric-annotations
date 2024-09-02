@@ -21,6 +21,10 @@ app.use('/api/japanese', japaneseRouter);
 const FRONTEND_INDEX = path.join(__dirname, '../frontend/dist/index.html');
 const FRONTEND_DIR = path.join(__dirname, '../frontend/dist');
 
+const directory = __dirname;
+console.log({ directory });
+console.log({ FRONTEND_INDEX, FRONTEND_DIR });
+
 app.use(express.static(FRONTEND_DIR));
 
 app.get('*', (_, res) => {
@@ -28,5 +32,5 @@ app.get('*', (_, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log('✅ express server on port', PORT);
+  console.log('✅ express server on port', PORT, directory);
 });
