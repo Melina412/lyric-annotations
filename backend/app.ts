@@ -32,5 +32,5 @@ app.get('*', (_, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log('✅ express server on port', PORT, directory);
+  console.log('✅ express server on port', PORT);
 });
