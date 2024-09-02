@@ -18,8 +18,11 @@ app.use(morgan('dev'));
 // app.use('/api/chinese', chineseRouter);
 app.use('/api/japanese', japaneseRouter);
 
-const FRONTEND_INDEX = path.join(__dirname, '../frontend/dist/index.html');
-const FRONTEND_DIR = path.join(__dirname, '../frontend/dist');
+const PROJECT_ROOT = process.cwd();
+console.log({ PROJECT_ROOT });
+
+const FRONTEND_INDEX = path.join(__dirname, '../../frontend/dist/index.html');
+const FRONTEND_DIR = path.join(__dirname, '../../frontend/dist');
 
 const directory = __dirname;
 console.log({ directory });
