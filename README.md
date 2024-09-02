@@ -1,6 +1,29 @@
+[in progress]
+
 ## new project: reading annotations generator for chinese, japanese & korean song lyrics
 
-docker compose structure with python
+This project was initially supposed to be set up with docker containers for both a python and node backend because i needed to use packages from both. Due to severe problems with some legacy packages and typescript i had to change the whole structure several times and in the end it was not neccessary to use python at all anymore. Despite everything I learned how to use python in a container inside a virtual env (in vs code 👹) and communicate with the node backend via a shared volume to avoid having to use another server for easier deployment.
+
+## features
+
+- [✅] Generate pronunciation annotations in Latin characters for song lyrics in Chinese, Japanese or Korean. This way, you can easily read the lyrics while listening to the music without having to constantly switch back and forth between two texts.
+- [✅] Create, preview and save annotated lyrics as PDF. [works currently only for Chinese & Japanese]
+- [✅] Print annotated lyrics via the browser print function (can also be saved as PDF).
+- [❌] Create a user account to save your favorite songtexts and access them every time you want.
+
+Please ignore console logs I just wanted to check if deployment works.
+
+## reading info for japanese kanji
+
+Since finding the correct reading according to the context is a difficult matter and even with the best tool I could find there are still too many mistakes, I implemented a method to get alternative reading options for japanese kanji and expressions. It's not finally decided which dictionaries/apis I will use. Information about licenses and sources can be found here:
+
+- [kanjiapi.dev](https://kanjiapi.dev/)
+- [Jotoba](https://jotoba.de/about)
+- [Jisho](https://jisho.org/about)
+
+I will update the license of the project once it's finished.
+
+### former docker compose structure with python
 
 ```
 project-root/
@@ -15,7 +38,7 @@ project-root/
 └── docker-compose.yml
 ```
 
-docker compose structure without python
+### docker compose structure without python
 
 ```
 project-root/
