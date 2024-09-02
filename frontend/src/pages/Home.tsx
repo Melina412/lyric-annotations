@@ -4,7 +4,7 @@ import Japanese from '../components/Japanese';
 import Korean from '../components/Korean';
 import type { Language, Annotations } from '../types';
 import Output from '../components/Output';
-import { checkPercentage } from '../utils/validateInput';
+import checkPercentage from '../utils/validateInput';
 
 function Home() {
   const [language, setLanguage] = useState<Language>(null);
