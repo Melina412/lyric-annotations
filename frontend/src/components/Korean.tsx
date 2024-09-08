@@ -18,14 +18,14 @@ function Korean({
 }: LanguageComponentProps) {
   const [validatedKr, setValidatedKr] = useState(false);
   const koreanPercentage = letterPercentage.Korean;
-  console.log('koreanPercentage:', koreanPercentage);
+  // console.log('koreanPercentage:', koreanPercentage);
 
   const titleInput = lyrics.titleInput;
   const textInput = lyrics.textInput;
 
   // # validate  ---------------------------------------
   useEffect(() => {
-    console.log(textInput.length);
+    // console.log(textInput.length);
     setValidatedKr(textInput.length > 0 ? true : false);
     setHint(textInput.length > 0 && koreanPercentage < 30 ? true : false);
     setValidatedKr(
@@ -68,9 +68,9 @@ function Korean({
       const splittedHangul = splitText(lyrics.textInput);
       const romanizedInput = textInput.romanize();
       const splittedText = splitText(romanizedInput);
-      console.log({ romanizedInput });
-      console.log({ splittedText });
-      console.log({ splittedHangul });
+      // console.log({ romanizedInput });
+      // console.log({ splittedText });
+      // console.log({ splittedHangul });
 
       if (splittedHangul && splittedHangul.length === splittedText.length) {
         const result: { base: string; ruby: string }[] = [];
@@ -78,17 +78,17 @@ function Korean({
         for (let i = 0; i < splittedHangul.length; i++) {
           result.push({ base: splittedHangul[i], ruby: splittedText[i] });
         }
-        console.log({ result });
+        // console.log({ result });
         setAnnotations(result);
         setTitle(lyrics.titleInput);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
   const handleClick = () => {
-    console.log({ titleInput }, { textInput });
+    // console.log({ titleInput }, { textInput });
     const inputLyrics = { titleInput, textInput };
 
     setLyrics(inputLyrics);
@@ -96,12 +96,12 @@ function Korean({
     setScrollToOutput(true);
   };
 
-  console.log('annotations:', annotations);
+  // console.log('annotations:', annotations);
   // console.log(titleInput);
-  console.log('textInput:', textInput);
-  console.log(lyrics);
-  console.log({ hint });
-  console.log({ validatedKr });
+  // console.log('textInput:', textInput);
+  // console.log(lyrics);
+  // console.log({ hint });
+  // console.log({ validatedKr });
 
   return (
     <>

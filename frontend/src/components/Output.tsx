@@ -26,7 +26,7 @@ function Output({ annotations, content, language }: OutputProps) {
     }
   }
 
-  console.log({ language });
+  // console.log({ language });
 
   return (
     <>

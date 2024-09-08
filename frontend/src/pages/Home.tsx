@@ -25,8 +25,6 @@ function Home() {
   const scrollTargetOutput = useRef<HTMLDivElement | null>(null);
   const [scrollToOutput, setScrollToOutput] = useState<boolean>(false);
 
-  console.log({ language });
-
   const content = {
     title: title,
     text: annotations,
@@ -52,7 +50,8 @@ function Home() {
   }, [scrollToOutput]);
 
   let viteenvs = import.meta.env;
-  console.log(viteenvs);
+  // console.log(viteenvs);
+  // console.log({ language });
 
   return (
     <>

@@ -33,18 +33,18 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
       if (modal) {
         modal.showModal();
       }
-      console.log('target:', target);
-      console.log('sibling:', target.nextElementSibling);
+      // console.log('target:', target);
+      // console.log('sibling:', target.nextElementSibling);
       const text = target.textContent;
 
       // * cut kanji ending
       if (expression && text) {
-        console.log('expression:', expression);
-        console.log('text:', text);
-        console.log('text[-1] ', text.slice(-1));
+        // console.log('expression:', expression);
+        // console.log('text:', text);
+        // console.log('text[-1] ', text.slice(-1));
 
         if (text.slice(-1) === 'っ' || text.slice(-1) === 'ッ') {
-          console.log('last letter is っ or ッ –> cut');
+          // console.log('last letter is っ or ッ –> cut');
           setKanji(text.slice(0, -1));
           // console.log('text[0:-1] ', text.slice(0, -1));
         } else {
@@ -57,12 +57,12 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
       // * cut romaji ending
       if (sibling) {
         const reading = sibling.textContent;
-        console.log('reading:', reading);
+        // console.log('reading:', reading);
 
         if (pronunciation && reading) {
-          console.log('pronunciation:', pronunciation);
+          // console.log('pronunciation:', pronunciation);
           if (reading.indexOf('~') !== -1) {
-            console.log('index of ~:', reading.indexOf('~'));
+            // console.log('index of ~:', reading.indexOf('~'));
             setRomaji(reading.slice(0, reading.indexOf('~')));
           } else {
             setRomaji(reading);
@@ -77,14 +77,13 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
   //$ getAlternativeKanjiReadings() ---------------------------------------------------------------
 
   async function getAlternativeKanjiReadings(expression: string): Promise<any> {
-    console.log('expression:', expression);
-
-    console.log('length:', expression.length);
+    // console.log('expression:', expression);
+    // console.log('length:', expression.length);
 
     if (expression.length === 1) {
       const res = await fetch(`https://kanjiapi.dev/v1/kanji/${expression}`);
       const data = await res.json();
-      console.log('kanji api data ', data);
+      // console.log('kanji api data ', data);
 
       if (res.ok) {
         const kun: string[] = data.kun_readings;
@@ -101,7 +100,7 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
         if (names.length > 0) {
           altReadings = [...altReadings, ...names];
         }
-        console.log('altReadings:', altReadings);
+        // console.log('altReadings:', altReadings);
         setAltReadings(altReadings);
       }
     } else if (expression.length > 1) {
@@ -128,14 +127,14 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
         }),
       });
       const dataJotoba = await resJotoba.json();
-      console.log('jotoba api data ', dataJotoba);
+      // console.log('jotoba api data ', dataJotoba);
 
       if (resJotoba.ok) {
         let data_2_words = dataJotoba.words;
         let data_2_kanji = dataJotoba.kanji;
 
-        console.log('data_2_words:', data_2_words);
-        console.log('data_2_kanji:', data_2_kanji);
+        // console.log('data_2_words:', data_2_words);
+        // console.log('data_2_kanji:', data_2_kanji);
 
         // # diese api ist vielleicht besser geeignet als jisho?
         //todo - einzelfälle überprüfen
@@ -159,16 +158,16 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
       }
 
       const dataJisho = await resJisho.json();
-      console.log('dataJisho ', dataJisho);
+      // console.log('dataJisho ', dataJisho);
 
       let altReadings: string[] = [];
       let altSet = new Set<string>();
       if (resJisho.ok && dataJisho.data.length > 0) {
         let data = dataJisho.data;
-        console.log('dataJisho.data ', data);
+        // console.log('dataJisho.data ', data);
 
         for (const item of data) {
-          console.log('item slug:', item.slug);
+          // console.log('item slug:', item.slug);
 
           if (
             item.slug === expression ||
@@ -183,16 +182,16 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
               }
             }
 
-            console.log('altReadings:', altReadings);
+            // console.log('altReadings:', altReadings);
             setAltReadings(altReadings);
 
             // } else if (item.slug.includes(expression)) {
             //   //
           } else {
-            console.log('altReadings:', altReadings);
-            console.log(
-              `no match found expression ${expression} in slug ${item.slug}`
-            );
+            // console.log('altReadings:', altReadings);
+            // console.log(
+            //   `no match found expression ${expression} in slug ${item.slug}`
+            // );
           }
         }
         // # alternative kanji readings wenn der ausdruck nicht gefunden wurde
@@ -200,18 +199,18 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
       }
       if (altReadings.length === 0) {
         let subExpressions = expression.split('');
-        console.log('subExpressions:', subExpressions);
+        // console.log('subExpressions:', subExpressions);
 
         let altKanji = new Set<string>();
         subExpressions.forEach((subEx) => {
           subEx.match(kanjiRegex) ? altKanji.add(subEx) : null;
         });
-        console.log('altKanji:', altKanji);
+        // console.log('altKanji:', altKanji);
         for (const subEx of altKanji) {
-          console.log('subEx', subEx);
+          // console.log('subEx', subEx);
           const res = await fetch(`https://kanjiapi.dev/v1/kanji/${subEx}`);
           const data = await res.json();
-          console.log('kanji api data ', data);
+          // console.log('kanji api data ', data);
 
           const kun: string[] = data.kun_readings;
           const on: string[] = data.on_readings;
@@ -227,7 +226,7 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
           if (names.length > 0) {
             altReadings = [...altReadings, ...names];
           }
-          console.log('altReadings:', altReadings);
+          // console.log('altReadings:', altReadings);
 
           // setAltKanjiReadings([{ kanji: subEx, readings: altReadings }]);
           setAltKanjiReadings((prev) => {
@@ -251,14 +250,14 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
   }, [annotations]);
 
   useEffect(() => {
-    console.log('kanji aus uef:', kanji);
-    console.log('romaji aus uef:', romaji);
-    console.log('%c----------------------------------', 'color: #9580F7;');
+    // console.log('kanji aus uef:', kanji);
+    // console.log('romaji aus uef:', romaji);
+    // console.log('%c----------------------------------', 'color: #9580F7;');
   }, [kanji]);
 
   // console.log('annotations:', annotations);
-  console.log({ altReadings });
-  console.log('altKanjiReadings:', altKanjiReadings);
+  // console.log({ altReadings });
+  // console.log('altKanjiReadings:', altKanjiReadings);
 
   return (
     <>
