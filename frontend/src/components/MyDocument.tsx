@@ -7,17 +7,16 @@ import {
   Font,
 } from '@react-pdf/renderer';
 
-import NotoSansSCLight from '/fonts/Noto_Sans_SC/static/NotoSansSC-Light.ttf';
-import NotoSansSCRegular from '/fonts/Noto_Sans_SC/static/NotoSansSC-Regular.ttf';
-import NotoSansSCSemiBold from '/fonts/Noto_Sans_SC/static/NotoSansSC-SemiBold.ttf';
 import InterRegular from '/fonts/Inter/static/Inter-Regular.ttf';
+import NotoSansSCRegular from '/fonts/Noto_Sans/SC/NotoSansSC-Regular.ttf';
+import NotoSansSCSemiBold from '/fonts/Noto_Sans/SC/NotoSansSC-SemiBold.ttf';
+import NotoSansKRRegular from '/fonts/Noto_Sans/KR/NotoSansKR-Regular.ttf';
+import NotoSansKRSemiBold from '/fonts/Noto_Sans/KR/NotoSansKR-SemiBold.ttf';
+import NotoSansJPRegular from '/fonts/Noto_Sans/JP/NotoSansJP-Regular.ttf';
+import NotoSansJPSemiBold from '/fonts/Noto_Sans/JP/NotoSansJP-SemiBold.ttf';
 
-import type { PdfContent } from '../types';
+import type { PdfContent, Language } from '../types';
 
-Font.register({
-  family: 'Noto Sans SC Light',
-  src: NotoSansSCLight,
-});
 Font.register({
   family: 'Noto Sans SC Regular',
   src: NotoSansSCRegular,
@@ -29,6 +28,22 @@ Font.register({
 Font.register({
   family: 'Inter Regular',
   src: InterRegular,
+});
+Font.register({
+  family: 'Noto Sans KR Regular',
+  src: NotoSansKRRegular,
+});
+Font.register({
+  family: 'Noto Sans KR SemiBold',
+  src: NotoSansKRSemiBold,
+});
+Font.register({
+  family: 'Noto Sans JP Regular',
+  src: NotoSansJPRegular,
+});
+Font.register({
+  family: 'Noto Sans JP SemiBold',
+  src: NotoSansJPSemiBold,
 });
 
 const styles = StyleSheet.create({
@@ -43,6 +58,16 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontFamily: 'Noto Sans SC SemiBold',
+    marginBottom: 20,
+  },
+  titleKR: {
+    fontSize: 20,
+    fontFamily: 'Noto Sans KR SemiBold',
+    marginBottom: 20,
+  },
+  titleJP: {
+    fontSize: 20,
+    fontFamily: 'Noto Sans JP SemiBold',
     marginBottom: 20,
   },
   textContainer: {
@@ -60,7 +85,24 @@ const styles = StyleSheet.create({
     paddingRight: 2,
     letterSpacing: 2,
     lineHeight: 1,
-    // backgroundColor: 'lightblue',
+  },
+  textKR: {
+    fontSize: 16,
+    fontFamily: 'Noto Sans KR Regular',
+    marginBottom: 0,
+    paddingLeft: 2,
+    paddingRight: 2,
+    letterSpacing: 2,
+    lineHeight: 1,
+  },
+  textJP: {
+    fontSize: 16,
+    fontFamily: 'Noto Sans JP Regular',
+    marginBottom: 0,
+    paddingLeft: 2,
+    paddingRight: 2,
+    letterSpacing: 2,
+    lineHeight: 1,
   },
   annotation: {
     fontSize: 8,
@@ -160,9 +202,11 @@ const numbersRegex = /[0-9]+/g;
 const RubyText = ({
   mainText,
   annotation,
+  language,
 }: {
   mainText: string;
   annotation: string;
+  language: Language;
 }) => {
   if (mainText === '#' || mainText === ' ') {
     return <Text style={styles.space}></Text>;
@@ -198,20 +242,49 @@ const RubyText = ({
     return (
       <View style={styles.rubyText}>
         <Text style={styles.annotation}>{annotation}</Text>
-        <Text style={styles.text}>{mainText}</Text>
+        <Text
+          style={
+            language === 'KOREAN'
+              ? styles.textKR
+              : language === 'JAPANESE'
+              ? styles.textJP
+              : styles.text
+          }>
+          {mainText}
+        </Text>
       </View>
     );
   }
 };
 
-const MyDocument = ({ content }: { content: PdfContent }) => (
+const MyDocument = ({
+  content,
+  language,
+}: {
+  content: PdfContent;
+  language: Language;
+}) => (
   <Document>
     <Page size='A4' style={styles.page}>
       <View style={styles.section}>
-        <Text style={styles.title}>{content.title}</Text>
+        <Text
+          style={
+            language === 'KOREAN'
+              ? styles.titleKR
+              : language === 'JAPANESE'
+              ? styles.titleJP
+              : styles.title
+          }>
+          {content.title}
+        </Text>
         <View style={styles.textContainer}>
           {content.text?.map((item, index) => (
-            <RubyText key={index} mainText={item.base} annotation={item.ruby} />
+            <RubyText
+              key={index}
+              mainText={item.base}
+              annotation={item.ruby}
+              language={language}
+            />
           ))}
         </View>
       </View>
