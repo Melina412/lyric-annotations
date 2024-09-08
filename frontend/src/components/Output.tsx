@@ -26,6 +26,8 @@ function Output({ annotations, content, language }: OutputProps) {
     }
   }
 
+  console.log({ language });
+
   return (
     <>
       <section className='output'>
