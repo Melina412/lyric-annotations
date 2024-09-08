@@ -14,6 +14,7 @@ function Japanese({
   setHint,
   lyrics,
   setLyrics,
+  setScrollToOutput,
 }: LanguageComponentProps) {
   const [validatedJp, setValidatedJp] = useState(false);
   const [tokens, setTokens] = useState<
@@ -118,6 +119,7 @@ function Japanese({
 
     setLyrics(inputLyrics);
     getLyrics(inputLyrics);
+    setScrollToOutput(true);
   };
 
   // console.log('wanakanaResult:', wanakanaResult);

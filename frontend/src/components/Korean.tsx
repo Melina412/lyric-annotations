@@ -14,6 +14,7 @@ function Korean({
   setLyrics,
   scriptLoaded,
   setScriptLoaded,
+  setScrollToOutput,
 }: LanguageComponentProps) {
   const [validatedKr, setValidatedKr] = useState(false);
   const koreanPercentage = letterPercentage.Korean;
@@ -92,6 +93,7 @@ function Korean({
 
     setLyrics(inputLyrics);
     getLyrics(inputLyrics);
+    setScrollToOutput(true);
   };
 
   console.log('annotations:', annotations);

@@ -83,3 +83,7 @@ I fall down, I rise up
 重なるたび getting so faster
 共鳴し合って証明したい
 僕の心が叫ぶんだ 今
+
+### todo
+
+- check if input/output component is loaded before scrolling

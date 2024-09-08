@@ -14,6 +14,7 @@ function Chinese({
   setLyrics,
   scriptLoaded,
   setScriptLoaded,
+  setScrollToOutput,
 }: LanguageComponentProps) {
   const [validatedCh, setValidatedCh] = useState(false);
   const chinesePercentage = letterPercentage.Chinese;
@@ -138,6 +139,7 @@ function Chinese({
 
     setLyrics(inputLyrics);
     getLyrics(inputLyrics);
+    setScrollToOutput(true);
   };
 
   console.log('annotations:', annotations);
