@@ -49,7 +49,7 @@ function Home() {
     setScrollToOutput(false);
   }, [scrollToOutput]);
 
-  let viteenvs = import.meta.env;
+  // let viteenvs = import.meta.env;
   // console.log(viteenvs);
   // console.log({ language });
 
