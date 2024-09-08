@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import InputHelper from './InputHelper';
 import type { LanguageComponentProps } from '../types';
 
 function Chinese({
@@ -13,21 +12,20 @@ function Chinese({
   setHint,
   lyrics,
   setLyrics,
-  helper,
-  setHelper,
   scriptLoaded,
   setScriptLoaded,
+  setScrollToOutput,
 }: LanguageComponentProps) {
   const [validatedCh, setValidatedCh] = useState(false);
   const chinesePercentage = letterPercentage.Chinese;
-  console.log('chinesePercentage:', chinesePercentage);
+  // console.log('chinesePercentage:', chinesePercentage);
 
   const titleInput = lyrics.titleInput;
   const textInput = lyrics.textInput;
 
   // # validate  ---------------------------------------
   useEffect(() => {
-    console.log('input len:', textInput.length);
+    // console.log('input len:', textInput.length);
     setValidatedCh(textInput.length > 0 ? true : false);
     setHint(textInput.length > 0 && chinesePercentage < 30 ? true : false);
     setValidatedCh(
@@ -114,10 +112,10 @@ function Chinese({
           []
         );
 
-        console.log('pinyinString', pinyinString);
-        console.log('splittedHanzi', splittedHanzi);
+        // console.log('pinyinString', pinyinString);
+        // console.log('splittedHanzi', splittedHanzi);
         // console.log('pinyinSegments', pinyinSegments);
-        console.log('splittedPinyin', splittedPinyin);
+        // console.log('splittedPinyin', splittedPinyin);
 
         if (splittedHanzi && splittedHanzi.length === splittedPinyin.length) {
           const result: { base: string; ruby: string }[] = [];
@@ -125,30 +123,31 @@ function Chinese({
           for (let i = 0; i < splittedHanzi.length; i++) {
             result.push({ base: splittedHanzi[i], ruby: splittedPinyin[i] });
           }
-          console.log({ result });
+          // console.log({ result });
           setAnnotations(result);
           setTitle(lyrics.titleInput);
         }
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
   const handleClick = () => {
-    console.log({ titleInput }, { textInput });
+    // console.log({ titleInput }, { textInput });
     const inputLyrics = { titleInput, textInput };
 
     setLyrics(inputLyrics);
     getLyrics(inputLyrics);
+    setScrollToOutput(true);
   };
 
-  console.log('annotations:', annotations);
+  // console.log('annotations:', annotations);
   // console.log(titleInput);
   // console.log('textInput:', textInput);
-  console.log(lyrics);
-  console.log({ hint });
-  console.log({ validatedCh });
+  // console.log(lyrics);
+  // console.log({ hint });
+  // console.log({ validatedCh });
 
   return (
     <>

@@ -7,8 +7,8 @@ This project was initially supposed to be set up with docker containers for both
 ## features
 
 - [✅] Generate pronunciation annotations in Latin characters for song lyrics in Chinese, Japanese or Korean. This way, you can easily read the lyrics while listening to the music without having to constantly switch back and forth between two texts.
-- [✅] Create, preview and save annotated lyrics as PDF. [works currently only for Chinese & Japanese]
-- [✅] Print annotated lyrics via the browser print function (can also be saved as PDF).
+- [✅] Create, preview and save annotated lyrics as PDF.
+- [✅] Print annotated lyrics via the browser print function (different text style, can also be saved as PDF).
 - [❌] Create a user account to save your favorite songtexts and access them every time you want.
 
 Please ignore console logs I just wanted to check if deployment works.
@@ -83,3 +83,7 @@ I fall down, I rise up
 重なるたび getting so faster
 共鳴し合って証明したい
 僕の心が叫ぶんだ 今
+
+### todo
+
+- check if input/output component is loaded before scrolling

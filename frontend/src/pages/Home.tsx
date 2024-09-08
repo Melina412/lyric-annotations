@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Chinese from '../components/Chinese';
 import Japanese from '../components/Japanese';
 import Korean from '../components/Korean';
 import type { Language, Annotations } from '../types';
 import Output from '../components/Output';
-import { checkPercentage } from '../utils/validateInput';
+import { checkPercentage } from '../utils/validateInput_temp';
 
 function Home() {
   const [language, setLanguage] = useState<Language>(null);
@@ -21,7 +21,9 @@ function Home() {
   const [helper, setHelper] = useState<boolean>(false);
   const [scriptLoaded, setScriptLoaded] = useState<boolean>(false);
 
-  console.log({ language });
+  const scrollTargetInput = useRef<HTMLDivElement | null>(null);
+  const scrollTargetOutput = useRef<HTMLDivElement | null>(null);
+  const [scrollToOutput, setScrollToOutput] = useState<boolean>(false);
 
   const content = {
     title: title,
@@ -34,16 +36,39 @@ function Home() {
     setAnnotations(null);
   }, [language]);
 
+  useEffect(() => {
+    if (language && scrollTargetInput.current) {
+      scrollTargetInput.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [language]);
+
+  useEffect(() => {
+    if (scrollToOutput && scrollTargetOutput.current) {
+      scrollTargetOutput.current.scrollIntoView({ behavior: 'smooth' });
+    }
+    setScrollToOutput(false);
+  }, [scrollToOutput]);
+
+  let viteenvs = import.meta.env;
+  // console.log(viteenvs);
+  // console.log({ language });
+
   return (
     <>
+      <header>
+        <div className='banner'>
+          <h1>Lyric Annotations</h1>
+        </div>
+      </header>
       <section className='language-selector'>
         <p>Select a language!</p>
-        <div>
+        <div ref={scrollTargetInput}>
           <button onClick={() => setLanguage('CHINESE')}>Chinese</button>
           <button onClick={() => setLanguage('JAPANESE')}>Japanese</button>
           <button onClick={() => setLanguage('KOREAN')}>Korean</button>
         </div>
       </section>
+
       {language === 'CHINESE' && (
         <Chinese
           language={language}
@@ -61,6 +86,7 @@ function Home() {
           setHelper={setHelper}
           scriptLoaded={scriptLoaded}
           setScriptLoaded={setScriptLoaded}
+          setScrollToOutput={setScrollToOutput}
         />
       )}
       {language === 'JAPANESE' && (
@@ -80,6 +106,7 @@ function Home() {
           setHelper={setHelper}
           scriptLoaded={scriptLoaded}
           setScriptLoaded={setScriptLoaded}
+          setScrollToOutput={setScrollToOutput}
         />
       )}
       {language === 'KOREAN' && (
@@ -99,9 +126,16 @@ function Home() {
           setHelper={setHelper}
           scriptLoaded={scriptLoaded}
           setScriptLoaded={setScriptLoaded}
+          setScrollToOutput={setScrollToOutput}
         />
       )}
-      <Output annotations={annotations} content={content} language={language} />
+      <div ref={scrollTargetOutput}>
+        <Output
+          annotations={annotations}
+          content={content}
+          language={language}
+        />
+      </div>
     </>
   );
 }

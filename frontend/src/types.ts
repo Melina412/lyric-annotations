@@ -39,6 +39,7 @@ export interface LanguageComponentProps {
   setHelper: Dispatch<SetStateAction<boolean>>;
   scriptLoaded: boolean;
   setScriptLoaded: Dispatch<SetStateAction<boolean>>;
+  setScrollToOutput: Dispatch<SetStateAction<boolean>>;
 }
 
 export type PdfContent = {

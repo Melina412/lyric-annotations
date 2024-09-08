@@ -7,7 +7,6 @@ import * as wanakana from 'wanakana';
 
 function Japanese({
   setLanguage,
-  annotations,
   setAnnotations,
   setTitle,
   letterPercentage,
@@ -15,8 +14,7 @@ function Japanese({
   setHint,
   lyrics,
   setLyrics,
-  helper,
-  setHelper,
+  setScrollToOutput,
 }: LanguageComponentProps) {
   const [validatedJp, setValidatedJp] = useState(false);
   const [tokens, setTokens] = useState<
@@ -27,15 +25,12 @@ function Japanese({
     }[]
   >([]);
   const japanesePercentage = letterPercentage.Japanese;
-  console.log('japanesePercentage:', japanesePercentage);
-  console.log({ hint });
-
   const titleInput = lyrics.titleInput;
   const textInput = lyrics.textInput;
 
   // # validate  ---------------------------------------
   useEffect(() => {
-    console.log(textInput.length);
+    // console.log(textInput.length);
     setValidatedJp(textInput.length > 0 ? true : false);
     setHint(textInput.length > 0 && japanesePercentage < 30 ? true : false);
     setValidatedJp(
@@ -62,7 +57,7 @@ function Japanese({
         setTokens(data.tokens);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -70,7 +65,7 @@ function Japanese({
 
   function addRomaji() {
     if (tokens) {
-      console.log('tokens-length:', tokens.length);
+      // console.log('tokens-length:', tokens.length);
 
       const result: { base: string; ruby: string }[] = [];
 
@@ -100,7 +95,7 @@ function Japanese({
           result.push({ base: surface, ruby: surface });
         }
       }
-      console.log({ result });
+      // console.log({ result });
       return result;
     }
     return [];
@@ -108,7 +103,7 @@ function Japanese({
 
   useEffect(() => {
     const romanizedTokens = addRomaji();
-    console.log('romanizedTokens:', romanizedTokens);
+    // console.log('romanizedTokens:', romanizedTokens);
     setAnnotations(romanizedTokens);
     setTitle(lyrics.titleInput);
   }, [tokens]);
@@ -116,17 +111,21 @@ function Japanese({
   // $----------------
 
   const handleClick = () => {
-    console.log({ titleInput }, { textInput });
+    // console.log({ titleInput }, { textInput });
     const inputLyrics = { titleInput, textInput };
 
     setLyrics(inputLyrics);
     getLyrics(inputLyrics);
+    setScrollToOutput(true);
   };
+
+  // console.log('japanesePercentage:', japanesePercentage);
+  // console.log({ hint });
 
   // console.log('wanakanaResult:', wanakanaResult);
   // console.log('kana:', kana);
   // console.log('romaji:', romaji);
-  console.log('tokens', tokens);
+  // console.log('tokens', tokens);
 
   return (
     <>

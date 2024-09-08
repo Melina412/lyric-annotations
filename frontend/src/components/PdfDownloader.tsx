@@ -3,13 +3,13 @@ import MyDocument from './MyDocument';
 import { PDFViewer, pdf } from '@react-pdf/renderer';
 import type { OutputProps } from '../types';
 
-function PdfDownloader({ annotations, content }: OutputProps) {
+function PdfDownloader({ annotations, content, language }: OutputProps) {
   const [showPDF, setShowPDF] = useState(false);
 
   const handleDownloadPDF = async () => {
     if (!annotations) return;
 
-    const doc = <MyDocument content={content} />;
+    const doc = <MyDocument content={content} language={language} />;
     const asPdf = pdf(doc);
     const blob = await asPdf.toBlob();
     const url = URL.createObjectURL(blob);
@@ -40,7 +40,7 @@ function PdfDownloader({ annotations, content }: OutputProps) {
         <>
           {showPDF && content && (
             <PDFViewer width='600' height='400'>
-              <MyDocument content={content} />
+              <MyDocument content={content} language={language} />
             </PDFViewer>
           )}
         </>
