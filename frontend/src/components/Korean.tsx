@@ -4,7 +4,7 @@ import type { LanguageComponentProps } from '../types';
 
 function Korean({
   setLanguage,
-  annotations,
+  // annotations,
   setAnnotations,
   setTitle,
   letterPercentage,

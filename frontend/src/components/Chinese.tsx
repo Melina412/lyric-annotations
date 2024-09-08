@@ -4,7 +4,7 @@ import type { LanguageComponentProps } from '../types';
 
 function Chinese({
   setLanguage,
-  annotations,
+  // annotations,
   setAnnotations,
   setTitle,
   letterPercentage,

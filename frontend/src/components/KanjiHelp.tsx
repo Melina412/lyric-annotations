@@ -126,16 +126,14 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
           no_english: false,
         }),
       });
-      const dataJotoba = await resJotoba.json();
+      // const dataJotoba = await resJotoba.json();
       // console.log('jotoba api data ', dataJotoba);
 
       if (resJotoba.ok) {
-        let data_2_words = dataJotoba.words;
-        let data_2_kanji = dataJotoba.kanji;
-
+        // let data_2_words = dataJotoba.words;
+        // let data_2_kanji = dataJotoba.kanji;
         // console.log('data_2_words:', data_2_words);
         // console.log('data_2_kanji:', data_2_kanji);
-
         // # diese api ist vielleicht besser geeignet als jisho?
         //todo - einzelfälle überprüfen
         // let altReadings: string[] = [];
@@ -144,15 +142,12 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
         //   console.log('item kanji:', item.reading.kanji);
         //   console.log('item kana:', item.reading.kana);
         //   console.log('item furigana:', item.reading.furigana);
-
         //   altSet.add(item.reading.furigana);
         //   console.log('altSet:', altSet);
         //   altReadings = Array.from(altSet);
         //   console.log('altReadings from data 2:', altReadings);
-
         //   setAltReadings(altReadings);
         // }
-
         // const kanji: string[] = data_2.kanji;
         // const words: string[] = data_2.words;
       }
