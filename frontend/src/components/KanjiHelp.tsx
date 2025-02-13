@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import * as wanakana from 'wanakana';
-import type { Annotations } from '../types';
+import type { KanjiHelpProps } from '../types';
 
-function KanjiHelp({ annotations }: { annotations: Annotations }) {
+function KanjiHelp({ annotations, setAnnotations, translation, saveTranslation, updateTranslation }: KanjiHelpProps) {
   const kanjiRegex = /([\u4E00-\u9FAF])/;
 
   const [kanji, setKanji] = useState<string>('');
@@ -15,6 +15,8 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
       }[]
     | null
   >(null);
+  const [kanjiIndex, setKanjiIndex] = useState<number | null>(null);
+  console.log('kanjiIndex:', kanjiIndex);
 
   const expression = document.getElementById('expression');
   const pronunciation = document.getElementById('pronunciation');
@@ -26,6 +28,28 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
     setAltKanjiReadings(null);
     const target = event.target as HTMLElement;
     const sibling = target.nextElementSibling;
+
+    console.log('target:', target);
+    console.log('sibling:', sibling);
+
+    const item = target.closest('.ruby-item');
+    console.log('item:', item);
+
+    if (item && annotations) {
+      const parent = item.parentElement as HTMLElement;
+      console.log('parent:', parent);
+
+      // <br> müssen rausgefiltert werden weil sonst annotation index nicht übereinstimmt
+      const items = Array.from(parent?.children || []).filter(
+        (el) => el.classList.contains('ruby-item') || el.classList.contains('space') || el.classList.contains('newline')
+      );
+
+      const index = items.indexOf(item);
+      console.log('Index:', index);
+      setKanjiIndex(index);
+
+      console.log('annotation index element:', annotations[index]);
+    }
 
     const modal = document.getElementById('modal') as HTMLDialogElement;
 
@@ -108,52 +132,52 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
       // fetch direkt an die api geht nicht weil jisho anfragen von node fetch & axios blockt.
       // um das zu umgehen muss der header manuell gesetzt werden was vom client aus nicht geht wegen cors
       // deshalb umweg über das backend wo der fetch nicht durch den browser muss und cors egal ist
-      const resJisho = await fetch(
-        `${
-          import.meta.env.VITE_BACKENDURL
-        }/api/japanese/jisho/words?keyword=${expression}`
-      );
+      const resJisho = await fetch(`${import.meta.env.VITE_BACKENDURL}/api/japanese/jisho/words?keyword=${expression}`);
 
       // # jisho geht in manchen fällen nicht so gut, leider viel handling nötig
-      const resJotoba = await fetch(`https://jotoba.de/api/search/words`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: expression,
-          language: 'English',
-          no_english: false,
-        }),
-      });
+      // const resJotoba = await fetch(`https://jotoba.de/api/search/words`, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     query: expression,
+      //     language: 'English',
+      //     no_english: false,
+      //   }),
+      // });
       // const dataJotoba = await resJotoba.json();
       // console.log('jotoba api data ', dataJotoba);
 
-      if (resJotoba.ok) {
-        // let data_2_words = dataJotoba.words;
-        // let data_2_kanji = dataJotoba.kanji;
-        // console.log('data_2_words:', data_2_words);
-        // console.log('data_2_kanji:', data_2_kanji);
-        // # diese api ist vielleicht besser geeignet als jisho?
-        //todo - einzelfälle überprüfen
-        // let altReadings: string[] = [];
-        // let altSet = new Set<string>();
-        // for (const item of data_2_words) {
-        //   console.log('item kanji:', item.reading.kanji);
-        //   console.log('item kana:', item.reading.kana);
-        //   console.log('item furigana:', item.reading.furigana);
-        //   altSet.add(item.reading.furigana);
-        //   console.log('altSet:', altSet);
-        //   altReadings = Array.from(altSet);
-        //   console.log('altReadings from data 2:', altReadings);
-        //   setAltReadings(altReadings);
-        // }
-        // const kanji: string[] = data_2.kanji;
-        // const words: string[] = data_2.words;
-      }
+      // if (resJotoba.ok) {
+      // let data_2_words = dataJotoba.words;
+      // let data_2_kanji = dataJotoba.kanji;
+      // console.log('data_2_words:', data_2_words);
+      // console.log('data_2_kanji:', data_2_kanji);
+      // # diese api ist vielleicht besser geeignet als jisho?
+      //todo - einzelfälle überprüfen
+
+      //todo - einzelfälle für die ich probleme habe:
+      //todo - 良い -> よい soll いい sein, 良 wird aber nicht als einzelner character gesucht weil die expressions liste ja nicht 0 ist
+
+      // let altReadings: string[] = [];
+      // let altSet = new Set<string>();
+      // for (const item of data_2_words) {
+      //   console.log('item kanji:', item.reading.kanji);
+      //   console.log('item kana:', item.reading.kana);
+      //   console.log('item furigana:', item.reading.furigana);
+      //   altSet.add(item.reading.furigana);
+      //   console.log('altSet:', altSet);
+      //   altReadings = Array.from(altSet);
+      //   console.log('altReadings from data 2:', altReadings);
+      //   setAltReadings(altReadings);
+      // }
+      // const kanji: string[] = data_2.kanji;
+      // const words: string[] = data_2.words;
+      // }
 
       const dataJisho = await resJisho.json();
-      // console.log('dataJisho ', dataJisho);
+      console.log('dataJisho ', dataJisho);
 
       let altReadings: string[] = [];
       let altSet = new Set<string>();
@@ -164,11 +188,8 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
         for (const item of data) {
           // console.log('item slug:', item.slug);
 
-          if (
-            item.slug === expression ||
-            item.slug.includes(`${expression}-`) ||
-            item.slug.startsWith(expression)
-          ) {
+          // ? in welchem fall brauche ich das alles
+          if (item.slug === expression || item.slug.includes(`${expression}-`) || item.slug.startsWith(expression)) {
             console.log('item.japanese:', item.japanese);
             for (const i of item.japanese) {
               if (i.reading) {
@@ -225,10 +246,7 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
 
           // setAltKanjiReadings([{ kanji: subEx, readings: altReadings }]);
           setAltKanjiReadings((prev) => {
-            const newReadings = [
-              ...(prev || []),
-              { kanji: subEx, readings: altReadings },
-            ];
+            const newReadings = [...(prev || []), { kanji: subEx, readings: altReadings }];
             return newReadings;
           });
         }
@@ -236,19 +254,45 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
     }
   }
 
-  useEffect(() => {
-    document.addEventListener('click', handleKanjiClick);
+  // $ event listeners --------------------------------------------------------------------
 
-    return () => {
-      document.removeEventListener('click', handleKanjiClick);
-    };
+  useEffect(() => {
+    if (annotations) {
+      const clickableArea = document.getElementById('textToPrint') as HTMLElement;
+      // document.addEventListener('click', handleKanjiClick);
+      clickableArea.addEventListener('click', handleKanjiClick);
+
+      return () => {
+        // document.removeEventListener('click', handleKanjiClick);
+        clickableArea.removeEventListener('click', handleKanjiClick);
+      };
+    }
   }, [annotations]);
 
-  useEffect(() => {
-    // console.log('kanji aus uef:', kanji);
-    // console.log('romaji aus uef:', romaji);
-    // console.log('%c----------------------------------', 'color: #9580F7;');
-  }, [kanji]);
+  // useEffect(() => {
+  //   if (altReadings) {
+  //     const clickableArea = document.getElementById('readings') as HTMLElement;
+  //     clickableArea.addEventListener('click', handleAltReadingsClick);
+
+  //     return () => {
+  //       clickableArea.removeEventListener('click', handleAltReadingsClick);
+  //     };
+  //   }
+  // }, [altReadings]);
+
+  const updateReading = (option: string) => {
+    console.log('kanji:', kanji);
+
+    console.log('new option:', wanakana.toRomaji(option));
+
+    let updatedAnnotations = annotations;
+    if (translation && kanjiIndex && updatedAnnotations && kanjiIndex >= 0 && kanjiIndex < updatedAnnotations.length) {
+      updatedAnnotations[kanjiIndex].ruby = wanakana.toRomaji(option);
+      setAnnotations(updatedAnnotations);
+      updateTranslation(translation?.id, updatedAnnotations);
+    }
+    console.log({ annotations });
+  };
 
   // console.log('annotations:', annotations);
   // console.log({ altReadings });
@@ -264,23 +308,21 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
         <dialog id='modal' className='modal'>
           <div className='modal-box'>
             <p>
-              Is '<span id='pronunciation'>{romaji}</span>' the wrong
-              pronunciation for <span id='expression'>{kanji}</span> ?
+              Is '<span id='pronunciation'>{romaji}</span>' the wrong pronunciation for{' '}
+              <span id='expression'>{kanji}</span> ?
             </p>
 
-            <button onClick={() => getAlternativeKanjiReadings(kanji)}>
-              Get alternative readings
-            </button>
+            <button onClick={() => getAlternativeKanjiReadings(kanji)}>Get alternative readings</button>
 
-            <div
-              className={`alt-readings ${altReadings ? 'active' : 'inactive'}`}>
+            <div className={`alt-readings ${altReadings ? 'active' : 'inactive'}`}>
               <p>Alternative reading options for {kanji}:</p>
+              <p id='modalInfo'>(click option to update reading in the lyrics)</p>
               {altReadings ? (
                 <>
                   <ul id='readings'>
                     {altReadings.map((option, index) => (
                       <li key={index}>
-                        <span>
+                        <span onClick={() => updateReading(option)}>
                           {wanakana.toRomaji(option)} ({option})
                         </span>
                       </li>
@@ -291,14 +333,8 @@ function KanjiHelp({ annotations }: { annotations: Annotations }) {
                 <div>Loading...</div>
               )}
             </div>
-            <div
-              className={`alt-readings ${
-                altKanjiReadings ? 'active' : 'inactive'
-              }`}>
-              <p>
-                ...no alternative readings found for {kanji}. Here are some
-                readings for the single kanji:
-              </p>
+            <div className={`alt-readings ${altKanjiReadings ? 'active' : 'inactive'}`}>
+              <p>...no alternative readings found for {kanji}. Here are some readings for the single kanji:</p>
               {altKanjiReadings ? (
                 <>
                   <div id='readings'>

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import MyDocument from './MyDocument';
 import { PDFViewer, pdf } from '@react-pdf/renderer';
-import type { OutputProps } from '../types';
+import type { PDFDownloaderProps } from '../types';
 
-function PdfDownloader({ annotations, content, language }: OutputProps) {
+function PdfDownloader({ annotations, content, language }: PDFDownloaderProps) {
   const [showPDF, setShowPDF] = useState(false);
 
   const handleDownloadPDF = async () => {
@@ -24,16 +24,10 @@ function PdfDownloader({ annotations, content, language }: OutputProps) {
     <>
       <div className='download'>
         <div>
-          <button
-            type='button'
-            onClick={handleDownloadPDF}
-            disabled={!annotations}>
+          <button type='button' onClick={handleDownloadPDF} disabled={!annotations}>
             Download as PDF
           </button>
-          <button
-            type='button'
-            onClick={() => setShowPDF(!showPDF)}
-            disabled={!annotations}>
+          <button type='button' onClick={() => setShowPDF(!showPDF)} disabled={!annotations}>
             {showPDF ? 'Hide Preview' : 'Preview PDF'}
           </button>
         </div>

@@ -9,13 +9,15 @@ This project was initially supposed to be set up with docker containers for both
 - [✅] Generate pronunciation annotations in Latin characters for song lyrics in Chinese, Japanese or Korean. This way, you can easily read the lyrics while listening to the music without having to constantly switch back and forth between two texts.
 - [✅] Create, preview and save annotated lyrics as PDF.
 - [✅] Print annotated lyrics via the browser print function (different text style, can also be saved as PDF).
+- [✅] Save your lyrics locally in the browser.
+- [✅] Manually edit Kanji readings in Japanese lyrics.
 - [❌] Create a user account to save your favorite songtexts and access them every time you want.
 
 Please ignore console logs I just wanted to check if deployment works.
 
 ## reading info for japanese kanji
 
-Since finding the correct reading according to the context is a difficult matter and even with the best tool I could find there are still too many mistakes, I implemented a method to get alternative reading options for japanese kanji and expressions. It's not finally decided which dictionaries/apis I will use. Information about licenses and sources can be found here:
+Since finding the correct reading according to the context is a difficult matter and even with the best (free) tool I could find there are still too many mistakes, I implemented a method to get alternative reading options for japanese kanji and expressions. It's not finally decided which dictionaries/apis I will use. Information about licenses and sources can be found here:
 
 - [kanjiapi.dev](https://kanjiapi.dev/)
 - [Jotoba](https://jotoba.de/about)
@@ -87,3 +89,7 @@ I fall down, I rise up
 ### todo
 
 - check if input/output component is loaded before scrolling
+- japanese: falsch generierte kanji im text durch api vorschläge ersetzen und lokal speichern ✅
+- generell die erstellten texte lokal speichern ✅
+- kanji api festlegen
+- lizenzen für apis angeben

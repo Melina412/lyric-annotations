@@ -10,6 +10,19 @@
   box-sizing: border-box;
 }
 
+.underline-on-hover {
+  &:hover {
+    text-decoration: underline;
+  }
+  cursor: pointer;
+}
+
+.flex-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 /* ********************************************************************* */
 
 header {
@@ -207,6 +220,10 @@ section.output {
 
     div.alt-readings {
       margin: 10px 0;
+
+      #modalInfo {
+        font-size: 12px;
+      }
     }
 
     p {
@@ -235,6 +252,11 @@ section.output {
       li {
         span {
           font-size: 18px;
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
     }
